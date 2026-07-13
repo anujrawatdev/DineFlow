@@ -31,7 +31,7 @@ const page = () => {
         body: JSON.stringify(userData),
       });
 
-      const data = response.json(userData);
+      const data = await response.json(userData);
 
       if (response.ok) {
         alert("login successfully");

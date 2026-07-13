@@ -188,15 +188,34 @@ const Page = () => {
             <div className="grid grid-cols-2 gap-5">
               <div>
                 <label className="mb-2 block font-medium text-white">
-                  Price Range
+                 Select Price Range
                 </label>
 
-                <select className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white outline-none backdrop-blur-md">
-                  <option className="text-black">₹</option>
-                  <option className="text-black">₹₹</option>
-                  <option className="text-black">₹₹₹</option>
-                  <option className="text-black">₹₹₹₹</option>
-                </select>
+                <select
+  value={price}
+  onChange={(e) => setPriceRange(e.target.value)}
+  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white outline-none backdrop-blur-md"
+>
+  <option value="" className="text-black">
+    Select Price Range
+  </option>
+
+  <option value="500-1000" className="text-black">
+    ₹500-1000
+  </option>
+
+  <option value="1000-3000" className="text-black">
+    ₹1000-3000
+  </option>
+
+  <option value="3000-6000" className="text-black">
+    ₹3000-6000
+  </option>
+
+  <option value="6000+" className="text-black">
+    ₹6000+
+  </option>
+</select>
               </div>
 
               <div>

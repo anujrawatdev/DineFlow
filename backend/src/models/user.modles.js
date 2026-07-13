@@ -52,7 +52,7 @@ const restaurantSchema = new mongoose.Schema(
       type: String,
     },
     price: {
-      type: Number,
+      type: String,
     },
     rating: {
       type: Number,
@@ -63,8 +63,9 @@ const restaurantSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    image: {
+    restaurantImage: {
       type: String, 
+      required:true,
     },
     cuisine: {
       type: String,

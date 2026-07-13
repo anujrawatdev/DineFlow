@@ -12,11 +12,11 @@ const Navbar = () => {
                 
                 justify-between
                 rounded-full
-                bg-white/10
+                bg-white/15
                 backdrop-blur-xl
                 border border-white/14
                 px-15 py-4" >
-        <div className='font-bold'>Dine<span className='text-amber-500' >Flow</span></div>
+        <div className='font-bold text-xl'>Dine<span className='text-amber-500' >Flow</span></div>
         <div className='flex gap-5' >
             <Link className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full" href="/home" >Home</Link>
             <Link className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full" href="/about" >AboutUs</Link>

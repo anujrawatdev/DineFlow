@@ -1,97 +1,109 @@
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
-const {User,Restaurant} = require('../models/user.modles');
+const jwt = require("jsonwebtoken");
+const { User, Restaurant } = require("../models/user.modles");
 
 //Create User
 async function createUser(req, res) {
   const { name, email, password } = req.body;
 
-  if(!name||!password||!email){
-    return res.status(400).json({message:"All fields are required"});
+  if (!name || !password || !email) {
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return res.status(404).json({ message: "This email is already exist" });
   }
- 
-    const hashPassword = await bcrypt.hash(password, 8);
 
-    const user = await User.create({
-      name,
-      email,
-      password: hashPassword,
-    });
+  const hashPassword = await bcrypt.hash(password, 8);
 
-     const token = jwt.sign( { id: user._id} ,process.env.JWT_SECRET,{expiresIn:'7d'});
-  
-  res.cookie("token",token,{
-    httpOnly:true,
-    sameSite:"strict",
+  const user = await User.create({
+    name,
+    email,
+    password: hashPassword,
+  });
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
-  })
+  });
 
-    return res.status(201).json({ message: "created successfully" });
-  
+  return res.status(201).json({ message: "created successfully" });
 }
 
 //Login User
-async function loginUser(req,res){
+async function loginUser(req, res) {
+  console.log("Body:", req.body);
+  const { email, password } = req.body;
 
-  const {email,password} = req.body;
+  const existingUser = await User.findOne({ email });
 
-  const existingUser = await User.findOne({email});
-  
-  if(!existingUser){
-    return res.status(404).json({message:"user not found"});
+  if (!existingUser) {
+    return res.status(404).json({ message: "user not found" });
   }
 
-  const match = await bcrypt.compare(password,existingUser.password);
+  const match = await bcrypt.compare(password, existingUser.password);
 
-  if(!match){
-    
-    return res.status(401).json({message:"Invalid emil or password"});
+  if (!match) {
+    return res.status(401).json({ message: "Invalid emil or password" });
   }
-  
-  const token = jwt.sign( { id: existingUser._id} ,process.env.JWT_SECRET,{expiresIn:'7d'});
-  
 
-  res.cookie("token",token,{
-    httpOnly:true,
-    sameSite:"strict",
+  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
-  })
+  });
 
   return res.status(200).json({
-  message: "Login successful",
-});
-}
-
-//Create Reastaurant
-async function createRestaurant(req,res){
-
-  console.log(req.user);
-
-  const {name,description,street,state,country,city,openingTime,closingTime,price,rating,owner,cuisine} = req.body;
-
-  const location = {
-  street,
-  city,
-  state,
-  country,
-};
-
-  if(!name || !description ||!openingTime ||!closingTime ||!cuisine){
-   return res.status(400).json({message:"all fields are required"});
-  }
-  if (!street || !city || !state || !country) {
-  return res.status(400).json({
-    message: "All location fields are required",
+    message: "Login successful",
   });
 }
 
-  console.log("BODY",req.body);
-  console.log("FILE:",req.file);
+//Create Reastaurant
+async function createRestaurant(req, res) {
+  const {
+    name,
+    description,
+    street,
+    state,
+    country,
+    city,
+    openingTime,
+    closingTime,
+    price,
+    rating,
+    owner,
+    cuisine,
+  } = req.body;
+
+  const location = {
+    street,
+    city,
+    state,
+    country,
+  };
+
+  if (!name || !description || !openingTime || !closingTime || !cuisine) {
+    return res.status(400).json({ message: "all fields are required" });
+  }
+  if (!street || !city || !state || !country) {
+    return res.status(400).json({
+      message: "All location fields are required",
+    });
+
+  }
+
+console.log("FILE:", req.file);
+console.log("BODY:", req.body);
 
   const restaurant = await Restaurant.create({
     name,
@@ -101,15 +113,66 @@ async function createRestaurant(req,res){
     closingTime,
     cuisine,
     price,
-    owner : req.user._id,
-    restaurantImage:"/uploads/" + req.file.filename
-  })
-  
-
-
-  return res.status(200).json({message:" Reastaurant created successfully"});
-
+    owner: req.user._id,
+    restaurantImage: "/uploads/" + req.file.filename,
+  });
+  console.log(restaurant);
+  return res.status(200).json({ message: " Reastaurant created successfully" });
 }
 
 
-module.exports = { createUser ,loginUser ,createRestaurant };
+
+async function getMyRestaurants(req, res) {
+   
+  try {
+    const myRestaurants = await Restaurant.find({owner:req.user._id});
+    res.json(myRestaurants);
+    
+  } catch (error) {
+    console.log("error:",error);
+  }
+  
+}
+
+async function deleteCard(req,res){
+
+try {
+  const restaurantId = req.params.id;
+
+const restaurant = await Restaurant.findById(req.params.id);
+
+if(!restaurant){
+  return res.status(404).json({message:"restaurant not found"});
+}
+
+if(restaurant.owner.toString() !== req.user._id.toString() ){
+
+  return res.status(403).json({message:"unauthorized owner"});
+
+ 
+}
+  await Restaurant.findByIdAndDelete(restaurantId);
+  
+  return res.status(200).json({message:"Restaurant deleted successfully"});
+
+}
+ catch (error) {
+  console.log("error",error);
+}
+}
+
+async function getAllRestaurants(req,res){
+
+  try {
+    const restaurants = await Restaurant.find();
+
+  return res.status(200).json(restaurants);
+  } catch (error) {
+    console.log("error:",error);
+
+    return res.status(500).json({message:"server error"});
+  }
+
+}
+
+module.exports = { createUser, loginUser, createRestaurant ,getMyRestaurants ,deleteCard ,getAllRestaurants };
