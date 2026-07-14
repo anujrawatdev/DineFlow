@@ -2,7 +2,7 @@
 
 import React, { useState , useEffect} from "react";
 import MyRestaurantNavbar from "../Navbar/myRestaurantNavbar";
-import RestaurantsCard from "../cards/RestaurantsCard";
+import MyRestaurantsCard from "../cards/myRestaurantsCard";
 
 const page = () => {
  
@@ -25,16 +25,17 @@ const page = () => {
 
   return (
     <>
+  
   <MyRestaurantNavbar />
 
   <main className=" min-h-screen bg-[#ead2b3] pt-32">
     <h1 className="text-2xl font-semibold text-amber-900 font-serif ml-5 underline underline-offset-4 " >Your Listed Restaurants</h1>
 
-    <div className="ml-5 flex gap-5 mt-5" >
+    <div className="ml-5 flex flex-wrap gap-5 mt-5" >
        {
         restaurants.map((restaurant)=>{
           return (
-            <RestaurantsCard
+            <MyRestaurantsCard
          key={restaurant._id}
          restaurant={restaurant}
          

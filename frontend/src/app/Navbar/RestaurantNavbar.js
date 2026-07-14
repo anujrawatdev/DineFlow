@@ -4,12 +4,12 @@ import Link from 'next/link.js';
 const Navbar = () => {
   return (
     <div  >
-      
+      {/* <nav className=' bg-transparent border-2 border-gray-400 w-[50vw] flex justify-around p-3 rounded-2xl text-white' > */}
         <nav className="fixed top-5 left-1/2 -translate-x-1/2
                 w-[55%]
                 h-[8%]
                 flex 
-                
+                z-55
                 justify-between
                 rounded-full
                 bg-amber-900/55
