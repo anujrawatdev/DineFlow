@@ -99,11 +99,10 @@ async function createRestaurant(req, res) {
     return res.status(400).json({
       message: "All location fields are required",
     });
-
   }
 
-console.log("FILE:", req.file);
-console.log("BODY:", req.body);
+  console.log("FILE:", req.file);
+  console.log("BODY:", req.body);
 
   const restaurant = await Restaurant.create({
     name,
@@ -120,59 +119,66 @@ console.log("BODY:", req.body);
   return res.status(200).json({ message: " Reastaurant created successfully" });
 }
 
-
-
 async function getMyRestaurants(req, res) {
-   
   try {
-    const myRestaurants = await Restaurant.find({owner:req.user._id});
+    const myRestaurants = await Restaurant.find({ owner: req.user._id });
     res.json(myRestaurants);
-    
   } catch (error) {
-    console.log("error:",error);
+    console.log("error:", error);
   }
-  
 }
 
-async function deleteCard(req,res){
+async function deleteCard(req, res) {
+  try {
+    const restaurantId = req.params.id;
 
-try {
-  const restaurantId = req.params.id;
+    const restaurant = await Restaurant.findById(req.params.id);
 
-const restaurant = await Restaurant.findById(req.params.id);
+    if (!restaurant) {
+      return res.status(404).json({ message: "restaurant not found" });
+    }
 
-if(!restaurant){
-  return res.status(404).json({message:"restaurant not found"});
+    if (restaurant.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "unauthorized owner" });
+    }
+    await Restaurant.findByIdAndDelete(restaurantId);
+
+    return res.status(200).json({ message: "Restaurant deleted successfully" });
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
-if(restaurant.owner.toString() !== req.user._id.toString() ){
-
-  return res.status(403).json({message:"unauthorized owner"});
-
- 
-}
-  await Restaurant.findByIdAndDelete(restaurantId);
-  
-  return res.status(200).json({message:"Restaurant deleted successfully"});
-
-}
- catch (error) {
-  console.log("error",error);
-}
-}
-
-async function getAllRestaurants(req,res){
-
+async function getAllRestaurants(req, res) {
   try {
     const restaurants = await Restaurant.find();
 
-  return res.status(200).json(restaurants);
+    return res.status(200).json(restaurants);
   } catch (error) {
-    console.log("error:",error);
+    console.log("error:", error);
 
-    return res.status(500).json({message:"server error"});
+    return res.status(500).json({ message: "server error" });
   }
-
 }
 
-module.exports = { createUser, loginUser, createRestaurant ,getMyRestaurants ,deleteCard ,getAllRestaurants };
+async function viewDetails(req, res) {
+  try {
+    const id = req.params.id;
+    const restaurantDetail = await Restaurant.findById(id);
+    return res
+      .status(200)
+      .json(restaurantDetail);
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+module.exports = {
+  createUser,
+  loginUser,
+  createRestaurant,
+  getMyRestaurants,
+  deleteCard,
+  getAllRestaurants,
+  viewDetails,
+};

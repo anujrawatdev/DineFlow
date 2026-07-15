@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const RestaurantsCard = ({ restaurant }) => {
   return (
@@ -51,6 +52,13 @@ const RestaurantsCard = ({ restaurant }) => {
             Book Now
           </button>
         </div>
+        <div className="flex justify-center">
+        <Link href={`/restaurants/${restaurant._id}`}>
+              <button className= "  text-sm text-amber-700 mt-3 hover:text-amber-900 hover:underline underline-offset-4">
+                View Details→
+              </button>
+            </Link>
+            </div>
       </div>
     </div>
   );
