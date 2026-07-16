@@ -17,7 +17,7 @@ const Navbar = () => {
                 border border-white/14
                 px-15 py-4" >
         <div className='font-bold text-xl'>Dine<span className='text-amber-500' >Flow</span></div>
-        <div className='flex gap-5' >
+        <div className=' text-neutral-50 flex gap-5' >
             <Link href="/home" className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full" >Home</Link>
             <Link className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full" href="/AboutUs" >AboutUs</Link>
             <Link className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full" href="/ContactUs" >ContactUs</Link>

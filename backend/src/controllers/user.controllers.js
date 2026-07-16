@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, Restaurant } = require("../models/user.modles");
+const { User, Restaurant, Booking } = require("../models/user.modles");
 
 //Create User
 async function createUser(req, res) {
@@ -165,14 +165,74 @@ async function viewDetails(req, res) {
   try {
     const id = req.params.id;
     const restaurantDetail = await Restaurant.findById(id);
-    return res
-      .status(200)
-      .json(restaurantDetail);
+    return res.status(200).json(restaurantDetail);
   } catch (error) {
     console.log("error:", error);
   }
 }
 
+async function bookRestaurant(req, res) {
+  const user = req.user.id;
+  const {
+    name,
+    bookingTime,
+    bookingDate,
+    restaurant,
+    guests,
+    email,
+    phone,
+    specialRequest,
+  } = req.body;
+
+  if (
+    !name ||
+    !restaurant ||
+    !bookingTime ||
+    !bookingDate ||
+    !guests ||
+    !email ||
+    !phone
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const restaurantExist = await Restaurant.findById(restaurant);
+
+  if (!restaurant) {
+    return res.status(404).json({
+      message: "Restaurant not found",
+    });
+  }
+
+  const booking = await Booking.create({
+    user,
+    email,
+    phone,
+    name,
+    restaurant,
+    guests,
+    bookingDate,
+    bookingTime,
+    specialRequest,
+  });
+
+  return res.status(200).json({
+    message: "Booking created successfully",
+  });
+}
+
+async function getBookings(req, res) {
+  try {
+    const bookings = await Booking.find({
+      user: req.user._id,
+    }).populate("restaurant");
+
+    return res.status(200).json(bookings);
+  } catch (error) {
+    console.log("error:", error);
+    return res.json({ message: "something went wrong" });
+  }
+}
 module.exports = {
   createUser,
   loginUser,
@@ -181,4 +241,6 @@ module.exports = {
   deleteCard,
   getAllRestaurants,
   viewDetails,
+  bookRestaurant,
+  getBookings,
 };

@@ -64,8 +64,8 @@ const restaurantSchema = new mongoose.Schema(
       required: true,
     },
     restaurantImage: {
-      type: String, 
-      required:true,
+      type: String,
+      required: true,
     },
     cuisine: {
       type: String,
@@ -77,7 +77,60 @@ const restaurantSchema = new mongoose.Schema(
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
+//Booking Restaurant Schema
+
+const bookingSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+  required: true,
+    },
+    restaurant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Restaurant",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    phone: {
+  type: String,
+  required: true,
+},
+email: {
+  type: String,
+},
+    guests: {
+      type: Number,
+      required: true,
+    },
+    bookingDate: {
+      type: Date,
+      required: true,
+    },
+    bookingTime: {
+      type: String,
+       required: true,
+    },
+    specialRequest:{
+      type:String,
+      default:""
+    },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "cancelled"],
+      default: "pending",
+    },
+  },
+  { timestamps: true },
+);
+
+const Booking = mongoose.model("Booking", bookingSchema);
+
 module.exports = {
   User,
   Restaurant,
+  Booking,
 };

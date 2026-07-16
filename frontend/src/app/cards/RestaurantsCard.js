@@ -48,9 +48,11 @@ const RestaurantsCard = ({ restaurant }) => {
         </div>
 
         <div className="mt-6">
-          <button className="w-full bg-amber-700 hover:bg-amber-800 text-white py-3 rounded-xl font-semibold transition">
+          <Link href={`/restaurants/${restaurant._id}`}>
+          <button className="w-full bg-amber-700 hover:bg-neutral-200 hover:text-amber-700 hover:border-1 text-white py-3 rounded-xl font-semibold transition">
             Book Now
           </button>
+          </Link>
         </div>
         <div className="flex justify-center">
         <Link href={`/restaurants/${restaurant._id}`}>

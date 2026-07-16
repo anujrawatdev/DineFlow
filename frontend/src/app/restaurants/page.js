@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import RestaurantsCard from "../cards/RestaurantsCard";
 import RestaurantNavbar from "../Navbar/RestaurantNavbar";
 import LandingPage from "./landingPage";
+import Footer from "../home/Footer/page";
 const page = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
 
@@ -14,7 +15,6 @@ const page = () => {
       });
       const data = await response.json();
       setAllRestaurants(data);
-
     };
 
     fetchAllRestaurants();
@@ -22,21 +22,17 @@ const page = () => {
 
   return (
     <div>
-      <RestaurantNavbar/>
+      <RestaurantNavbar />
       <main className="min-h-screen bg-neutral-300 pt-32">
-  <LandingPage />
+        <LandingPage />
 
-  <section className="flex flex-wrap gap-5 justify-center px-10 py-10">
-
-    {allRestaurants.map((restaurant) => (
-      <RestaurantsCard
-        key={restaurant._id}
-        restaurant={restaurant}
-      />
-    ))}
-  </section>
-</main>
-      
+        <section className="flex flex-wrap gap-5 justify-center px-10 py-10">
+          {allRestaurants.map((restaurant) => (
+            <RestaurantsCard key={restaurant._id} restaurant={restaurant} />
+          ))}
+        </section>
+      </main>
+      <Footer/>
     </div>
   );
 };
