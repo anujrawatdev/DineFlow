@@ -110,7 +110,7 @@ const Page = () => {
             {/* Bottom */}
             <div>
               <Link href={`/restaurants/${id}/book`}>
-              <button className="w-full mt-10 bg-amber-800 hover:bg-amber-900 transition duration-300 text-neutral-200 font-bold py-4 rounded-2xl text-lg shadow-lg">
+              <button className="w-full mt-10 bg-amber-800 hover:bg-neutral-300 hover:border-1 hover:border-amber-800 hover:text-amber-800 transition duration-300 text-neutral-200 font-bold py-4 rounded-2xl text-lg shadow-lg">
                 Book Restaurant
               </button>
               </Link>

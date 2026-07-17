@@ -85,7 +85,7 @@ const Page = () => {
 
           <div className="flex justify-center mt-12">
             <Link href="/restaurants">
-              <button className="bg-amber-700 hover:bg-amber-600 text-white font-semibold rounded-2xl px-6 py-2.5 transition-all duration-300">
+              <button className="bg-amber-800 hover:bg-amber-600 text-white font-semibold rounded-2xl px-6 py-2.5 transition-all duration-300">
                 View All Restaurants →
               </button>
             </Link>

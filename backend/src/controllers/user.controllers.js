@@ -233,6 +233,41 @@ async function getBookings(req, res) {
     return res.json({ message: "something went wrong" });
   }
 }
+
+async function getOwnerBookings(req, res) {
+  try {
+    const bookings = await Booking.find().populate("restaurant");
+    
+    const ownerBookings = bookings.filter((booking) => {
+      return booking.restaurant.owner.toString() === req.user._id.toString();
+    });
+
+    return res.json(ownerBookings);
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+async function updateBookingStatus(req,res){
+
+  try {
+    const {status} = req.body;
+  const booking = await Booking.findById(req.params.id);
+   if(!booking){
+    return res.status(404).json({message:"booking not found"});
+   }
+
+   booking.status = status;
+   await booking.save();
+
+   return res.status(200).json({
+  message: "Booking status updated successfully",
+});
+  } catch (error) {
+    console.log("error:",error);
+  }
+
+}
 module.exports = {
   createUser,
   loginUser,
@@ -243,4 +278,6 @@ module.exports = {
   viewDetails,
   bookRestaurant,
   getBookings,
+  getOwnerBookings,
+  updateBookingStatus
 };

@@ -49,7 +49,7 @@ const RestaurantsCard = ({ restaurant }) => {
 
         <div className="mt-6">
           <Link href={`/restaurants/${restaurant._id}`}>
-          <button className="w-full bg-amber-700 hover:bg-neutral-200 hover:text-amber-700 hover:border-1 text-white py-3 rounded-xl font-semibold transition">
+          <button className="w-full bg-amber-800 hover:bg-neutral-200 hover:text-amber-800 hover:border-1 text-white py-3 rounded-xl font-semibold transition">
             Book Now
           </button>
           </Link>

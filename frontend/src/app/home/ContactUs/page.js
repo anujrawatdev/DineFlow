@@ -82,8 +82,8 @@ const Contact = () => {
           </motion.div>
           <div className="flex gap-5 justify-center items-center flex-col h-[45vh] w-[35vw] rounded-2xl bg-cover">
             <h3 className=" text-neutral-900 flex flex-col justify-center font-bold font-serif text-5xl">Want to be our<span className="ml-20 text-amber-800">Partner</span></h3>
-        <a href="/signup"><button href="/signup" className=" text-xl font-bold font-sans text-shadow-lg px-4 py-3 h-[50px] w-[200px] rounded-2xl bg-amber-800 hover:bg-amber-900" >Sign Up</button></a>  
-         <a href="/login"><button  className=" text-xl font-bold font-sans text-shadow-lg py-3 px-5 h-[50px] w-[200px] rounded-2xl bg-amber-800 hover:bg-amber-900" >Login</button></a> 
+        <a href="/signup"><button href="/signup" className=" text-xl font-bold font-sans text-shadow-lg px-4 py-3 h-[50px] w-[200px] rounded-2xl bg-amber-800 hover:bg-neutral-200 hover:border-1 hover:border-amber-800 hover:text-amber-800" >Sign Up</button></a>  
+         <a href="/login"><button  className=" text-xl font-bold font-sans text-shadow-lg py-3 px-5 h-[50px] w-[200px] rounded-2xl bg-amber-800 hover:border-1 hover:border-amber-800 hover:bg-neutral-200 hover:text-amber-800" >Login</button></a> 
 </div>
         </div>
       </div>
