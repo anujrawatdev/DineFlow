@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createUser,loginUser ,createRestaurant,getMyRestaurants ,deleteCard,getAllRestaurants,viewDetails,bookRestaurant,getBookings,getOwnerBookings,updateBookingStatus} = require('../controllers/user.controllers');
+const { createUser,loginUser ,createRestaurant,getMyRestaurants ,deleteCard,getAllRestaurants,viewDetails,bookRestaurant,getBookings,getOwnerBookings,updateBookingStatus,logout} = require('../controllers/user.controllers');
 const {checkForAuthentication} = require('../middleware/user');
 const upload = require('../middleware/upload.middleware');
 
@@ -19,5 +19,7 @@ router.get("/restaurants/:id",viewDetails);
 router.post("/bookings",checkForAuthentication,bookRestaurant);
 router.get("/myBookings",checkForAuthentication,getBookings);
 router.get("/ownerBookings",checkForAuthentication,getOwnerBookings);
-router.patch("/ownerBookings/:id",checkForAuthentication,updateBookingStatus)
+router.patch("/ownerBookings/:id",checkForAuthentication,updateBookingStatus);
+router.post("/logout",logout);
+
 module.exports = router;

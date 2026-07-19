@@ -1,12 +1,13 @@
 import React from "react";
 import { Search } from "lucide-react";
 
-const LandingPage = () => {
+const LandingPage = ({searchTerm,setSearchTerm}) => {
+
   return (
     <section
       className="
       relative
-      h-[70vh]
+      h-[80vh]
       w-full
       overflow-hidden
       "
@@ -88,7 +89,8 @@ const LandingPage = () => {
     className="absolute left-5 top-1/2 -translate-y-1/2 z-10 text-gray-300 pointer-events-none"
   />
           <input
-          
+          value={searchTerm}
+          onChange={(e)=> setSearchTerm(e.target.value)}
             type="text"
             placeholder=" Search restaurants, cuisines or locations..."
             className="

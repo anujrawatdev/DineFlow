@@ -1,7 +1,7 @@
 import React from "react";
+import Link from "next/link";
 
-const myRestaurantsCard = ({ restaurant}) => {
-
+const myRestaurantsCard = ({ restaurant }) => {
   console.log(restaurant);
   const handleDelete = async (id) => {
     await fetch(`http://localhost:5000/my-restaurants/delete/${id}`, {
@@ -13,12 +13,11 @@ const myRestaurantsCard = ({ restaurant}) => {
     <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden w-[350px]">
       {/* Restaurant Image */}
       <div className="relative">
-      
-<img
-  src={`http://localhost:5000${restaurant.restaurantImage}`}
-  alt={restaurant.name}
-  className="h-48 w-full object-cover"
-/>
+        <img
+          src={`http://localhost:5000${restaurant.restaurantImage}`}
+          alt={restaurant.name}
+          className="h-48 w-full object-cover"
+        />
 
         <span className="absolute top-4 left-4 bg-amber-800 text-white text-sm font-semibold px-3 py-1 rounded-full">
           Open
@@ -33,9 +32,7 @@ const myRestaurantsCard = ({ restaurant}) => {
       <div className="p-5">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-xl font-bold text-black">
-              {restaurant.name}
-            </h2>
+            <h2 className="text-xl font-bold text-black">{restaurant.name}</h2>
 
             <p className="text-black text-sm">
               📍 {restaurant.location.country}, {restaurant.location.state}
@@ -58,18 +55,21 @@ const myRestaurantsCard = ({ restaurant}) => {
 
         {/* Footer */}
         <div className="flex justify-between items-center mt-6">
-          <button className="px-4 py-2 rounded-xl bg-amber-800 text-white hover:bg-amber-600 transition">
-            View
-          </button>
+          <Link
+            href={`/restaurants/${restaurant._id}`}
+            className="px-3 py-2 rounded-sm bg-amber-800 text-white hover:bg-amber-600"
+          >
+            View Details
+          </Link>
 
           <div className="flex gap-2">
-            <button className="px-4 py-2 bg-gray-500 rounded-xl border border-gray-300 hover:bg-gray-600 transition">
+            <button className="px-5 py-1 rounded-sm bg-gray-500 border border-gray-300 hover:bg-gray-600 ">
               Edit
             </button>
 
             <button
               onClick={() => handleDelete(restaurant._id)}
-              className="px-4 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 transition"
+              className="px-4 py-2 rounded-sm bg-red-500 text-white hover:bg-red-600 "
             >
               Delete
             </button>

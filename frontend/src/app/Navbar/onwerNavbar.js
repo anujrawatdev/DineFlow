@@ -5,9 +5,9 @@ import { useState, useRef, useEffect } from "react";
 import { User, CalendarDays, Store, LogOut, ChevronDown } from "lucide-react";
 import {useRouter} from "next/navigation";
 
-const Navbar = () => {
+const OwnerNavbar = () => {
      const router = useRouter();
-     
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -98,7 +98,7 @@ const Navbar = () => {
         </button>
 
         {isOpen && (
-          <div className=" text-neutral-200 absolute right-0 mt-3 w-60 rounded-xl bg-black/55 border border-zinc-700 overflow-hidden">
+          <div className="absolute right-0 mt-3 w-60 rounded-xl text-neutral-200 bg-black/55 backdrop-blur-3xl border border-zinc-700 overflow-hidden">
             <Link
               href="/profile"
               className="flex items-center gap-3 px-4 py-3 hover:bg-neutral-300/55 transition"
@@ -109,6 +109,22 @@ const Navbar = () => {
 
             <Link
               href="/myRestaurants"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-neutral-300/55 transition"
+            >
+              <CalendarDays size={18} />
+              My Restaurants
+            </Link>
+
+            <Link
+              href="/ownerBookings"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-neutral-300/55 transition"
+            >
+              <Store size={18} />
+             Booking Requests
+            </Link>
+
+            <Link
+              href="/add-restaurant"
               className="flex items-center gap-3 px-4 py-3 hover:bg-neutral-300/55 transition"
             >
               <Store size={18} />
@@ -131,4 +147,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default OwnerNavbar;

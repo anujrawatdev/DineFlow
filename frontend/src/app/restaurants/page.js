@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import RestaurantsCard from "../cards/RestaurantsCard";
-import RestaurantNavbar from "../Navbar/RestaurantNavbar";
 import LandingPage from "./landingPage";
 import Footer from "../home/Footer/page";
+import Navbar from "../Navbar/Navbar";
+import { filter } from "framer-motion/client";
 const page = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [allRestaurants, setAllRestaurants] = useState([]);
 
   useEffect(() => {
@@ -20,19 +22,28 @@ const page = () => {
     fetchAllRestaurants();
   }, []);
 
+  const filterRestaurants = allRestaurants.filter((restaurant)=>{
+     return restaurant.name
+     .toLowerCase()
+     .includes(searchTerm.toLowerCase());
+  })
+
   return (
     <div>
-      <RestaurantNavbar />
-      <main className="min-h-screen bg-neutral-300 pt-32">
-        <LandingPage />
+      <Navbar />
+      <main className="min-h-screen bg-neutral-300">
+        <LandingPage 
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+         />
 
         <section className="flex flex-wrap gap-5 justify-center px-10 py-10">
-          {allRestaurants.map((restaurant) => (
+          {filterRestaurants.map((restaurant) => (
             <RestaurantsCard key={restaurant._id} restaurant={restaurant} />
           ))}
         </section>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

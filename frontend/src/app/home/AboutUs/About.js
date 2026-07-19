@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Navbar from "@/app/Navbar/Navbar";
+
 
 
 
 const About = () => {
   return (
-    <div className="relative min-h-screen bg-neutral-300 text-neutral-900 selection:bg-amber-500 selection:text-black">
-      <Navbar />
+    <div id="about" className=" relative min-h-screen bg-neutral-300 text-neutral-900 selection:bg-amber-500 selection:text-black">
 
       {/* Hero Section */}
       <section className="relative h-[60vh] flex flex-col items-center justify-center overflow-hidden">
@@ -22,7 +21,7 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6"
           >
-            Redefining <span className="text-amber-400">Fine Dining</span>
+            Redefining <span className="text-amber-500">Fine Dining</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}

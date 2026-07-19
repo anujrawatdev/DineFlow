@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useState , useEffect} from "react";
-import MyRestaurantNavbar from "../Navbar/myRestaurantNavbar";
 import MyRestaurantsCard from "../cards/myRestaurantsCard";
+import OwnerNavbar from "../Navbar/onwerNavbar";
 
 const page = () => {
  
@@ -26,7 +26,7 @@ const page = () => {
   return (
     <>
   
-  <MyRestaurantNavbar />
+  <OwnerNavbar />
 
   <main className=" min-h-screen bg-[#ead2b3] pt-32">
     <h1 className="text-2xl font-semibold text-amber-900 font-serif ml-5 underline underline-offset-4 " >Your Listed Restaurants</h1>

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Navbar from "@/app/Navbar/Navbar";
+
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -12,8 +12,8 @@ const Contact = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-neutral-300 text-neutral-350">
-      <Navbar />
+    <div id="contact" className="relative min-h-screen bg-neutral-300 text-neutral-350">
+    
 
       <div className="relative max-w-7xl mx-auto px-6 py-24 z-10">
         

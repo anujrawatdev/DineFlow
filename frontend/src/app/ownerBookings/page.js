@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import Navbar from "../Navbar/Navbar";
 import { useState, useEffect } from "react";
+import OwnerNavbar from "../Navbar/onwerNavbar";
 
 const page = () => {
   const [bookings, setBookings] = useState([]);
@@ -36,7 +36,7 @@ const page = () => {
   };
   return (
     <>
-      <Navbar />
+      <OwnerNavbar />
       <div className=" p-34 p-10 min-h-screen bg-neutral-200">
         <h1 className=" text-3xl text-amber-900 font-bold mb-8">
           Booking Requests

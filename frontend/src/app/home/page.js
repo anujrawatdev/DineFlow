@@ -30,6 +30,10 @@ const Page = () => {
 
   return (
     <div className="relative min-h-screen bg-neutral-900 text-white">
+
+      <div>
+        <Navbar />
+      </div>
   
       <div className="relative h-[100vh] w-full overflow-hidden">
         {/* Background Image */}
@@ -49,16 +53,14 @@ const Page = () => {
             Reserve your table in seconds and enjoy unforgettable dining
             experiences at top-rated restaurants.
           </p>
-          <button className="mt-8 font-bold rounded-full border border-amber-400/40 hover:bg-white/10 backdrop-blur-md px-6 py-3 text-white tracking-wide transition-all duration-300 bg-amber-900 hover:text-white hover:scale-105">
-            Explore Restaurants
-          </button>
+          <Link href="/restaurants">
+  <button className="mt-8 font-bold rounded-full border border-amber-400/40 hover:bg-white/10 backdrop-blur-md px-6 py-3 text-white tracking-wide transition-all duration-300 bg-amber-900 hover:text-white hover:scale-105">
+    Explore Restaurants
+  </button>
+</Link>
         </div>
       </div>
 
-      
-      <div>
-        <Navbar />
-      </div>
 
       {/* --- CONTENT AREA --- */}
       <div className="relative z-10 bg-neutral-300">

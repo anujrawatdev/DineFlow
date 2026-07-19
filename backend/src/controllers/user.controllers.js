@@ -268,6 +268,23 @@ async function updateBookingStatus(req,res){
   }
 
 }
+
+async function logout(req,res){
+  try {
+    res.clearCookie("token",{
+      httpOnly:true,
+      secure:false,
+      sameSite:"strict",
+    });
+
+    return res.status(200).json({message:"logged out successfully"});
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:"something went wrong"
+    });
+  }
+}
 module.exports = {
   createUser,
   loginUser,
@@ -279,5 +296,6 @@ module.exports = {
   bookRestaurant,
   getBookings,
   getOwnerBookings,
-  updateBookingStatus
+  updateBookingStatus,
+  logout
 };
