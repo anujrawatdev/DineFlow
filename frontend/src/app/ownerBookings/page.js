@@ -29,11 +29,18 @@ const page = () => {
         status: status,
       }),
     });
-    console.log(response.status);
+
+    const data = await response.json();
+
+    console.log("Owner Bookings:", data);
+    console.log("API Response:", data);
+
+    setBookings(data);
 
     const text = await response.text();
     console.log(text);
   };
+  console.log("Bookings:", bookings);
   return (
     <>
       <OwnerNavbar />

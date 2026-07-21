@@ -237,54 +237,64 @@ async function getBookings(req, res) {
 async function getOwnerBookings(req, res) {
   try {
     const bookings = await Booking.find().populate("restaurant");
-    
+
+    console.log("Logged in Owner:", req.user._id);
+
+    console.log("All Bookings:", bookings);
+
     const ownerBookings = bookings.filter((booking) => {
-      return booking.restaurant.owner.toString() === req.user._id.toString();
+      console.log("Restaurant Owner:", booking.restaurant?.owner?.toString());
+
+      return (
+        booking.restaurant &&
+        booking.restaurant.owner.toString() === req.user._id.toString()
+      );
     });
 
+    console.log("Owner Bookings:", ownerBookings);
+
     return res.json(ownerBookings);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function updateBookingStatus(req, res) {
+  try {
+    const { status } = req.body;
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ message: "booking not found" });
+    }
+
+    booking.status = status;
+    await booking.save();
+
+    return res.status(200).json({
+      message: "Booking status updated successfully",
+    });
   } catch (error) {
     console.log("error:", error);
   }
 }
 
-async function updateBookingStatus(req,res){
-
+async function logout(req, res) {
   try {
-    const {status} = req.body;
-  const booking = await Booking.findById(req.params.id);
-   if(!booking){
-    return res.status(404).json({message:"booking not found"});
-   }
-
-   booking.status = status;
-   await booking.save();
-
-   return res.status(200).json({
-  message: "Booking status updated successfully",
-});
-  } catch (error) {
-    console.log("error:",error);
-  }
-
-}
-
-async function logout(req,res){
-  try {
-    res.clearCookie("token",{
-      httpOnly:true,
-      secure:false,
-      sameSite:"strict",
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
     });
 
-    return res.status(200).json({message:"logged out successfully"});
+    return res.status(200).json({ message: "logged out successfully" });
   } catch (error) {
     return res.status(500).json({
-      success:false,
-      message:"something went wrong"
+      success: false,
+      message: "something went wrong",
     });
   }
 }
+
 module.exports = {
   createUser,
   loginUser,
@@ -297,5 +307,5 @@ module.exports = {
   getBookings,
   getOwnerBookings,
   updateBookingStatus,
-  logout
+  logout,
 };

@@ -40,6 +40,7 @@ const MyBookings = () => {
         console.log(data);
 
         if(response.ok){
+          console.log(data)
           setMyBookings(data);
         }
 
@@ -79,13 +80,15 @@ const MyBookings = () => {
             </thead>
 
             <tbody>
-              {myBookings.map((booking) => (
+              {
+              
+              myBookings.map((booking) => (
                 <tr
                   key={booking._id}
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="px-6 py-5 font-semibold text-gray-800">
-                    {booking.restaurant.name}
+                    {booking.restaurant?.name|| "Restaurant not found"}
                   </td>
 
                   <td className="px-6 py-5 text-gray-600">{new Date(booking.bookingDate).toLocaleDateString()}</td>
