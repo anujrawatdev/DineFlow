@@ -13,7 +13,10 @@ const getAllUsersAdmin = async (req, res) => {
 
 const getAllRestaurantsAdmin = async (req, res) => {
   try {
-    const restaurants = await Restaurant.find();
+    const restaurants = await Restaurant.find().populate("owner","name email");
+    console.log(
+  JSON.stringify(restaurants[0].owner, null, 2)
+);
     return res.status(200).json(restaurants);
   } catch (error) {
     return res
@@ -26,7 +29,7 @@ const getAllBookingsAdmin = async (req, res) => {
   try {
     const bookings = await Booking.find()
     .populate("user","name email")
-    .populate("restaurant","restaurantName");
+    .populate("restaurant","name");
     
     return res.status(200).json(bookings);
   } catch (error) {

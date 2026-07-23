@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const Page = () => {
   const [stats, setStats] = useState({});
-  console.log("STATS DATA:", stats);
+  
   useEffect(() => {
     const fetchDashbaordData = async () => {
       try {
@@ -14,13 +14,11 @@ const Page = () => {
           method: "GET",
           credentials: "include",
         });
-        console.log("STATS:",response.status);
+        
         if (!response.ok) {
           throw new Error("Failed to fetch dashboard data");
         }
         const data = await response.json();
-
-        console.log("API RESPONSE",data);
 
         setStats(data);
       } catch (error) {
@@ -58,14 +56,14 @@ const Page = () => {
             </Link>
             <hr className="text-black" />
             <Link
-              href="/restaurants"
+              href="/admin/restaurants"
               className=" mt-3 rounded-lg text-neutral-900 hover:text-xl transition-all duration-200"
             >
               Restaurants
             </Link>
             <hr className="text-black" />
             <Link
-              href="/bookings"
+              href="/admin/bookings"
               className="mt-3 rounded-lg text-neutral-900 hover:text-xl transition-all duration-200"
             >
               Bookings
@@ -94,12 +92,12 @@ const Page = () => {
            count={stats?.totalUsers} 
            emoji="👥" />
           <DashboardCard
-            title={"Users"}
+            title={"Restaurants"}
             count={stats?.totalRestaurants}
             emoji="🍽️"
           />
           <DashboardCard
-            title={"Users"}
+            title={"Bookings"}
             count={stats?.totalBookings}
             emoji="📅"
           />

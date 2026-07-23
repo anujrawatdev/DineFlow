@@ -38,7 +38,7 @@ async function createUser(req, res) {
 
 //Login User
 async function loginUser(req, res) {
-  console.log("Body:", req.body);
+  
   const { email, password } = req.body;
 
   const existingUser = await User.findOne({ email });
@@ -101,9 +101,6 @@ async function createRestaurant(req, res) {
     });
   }
 
-  console.log("FILE:", req.file);
-  console.log("BODY:", req.body);
-
   const restaurant = await Restaurant.create({
     name,
     description,
@@ -115,7 +112,7 @@ async function createRestaurant(req, res) {
     owner: req.user._id,
     restaurantImage: "/uploads/" + req.file.filename,
   });
-  console.log(restaurant);
+
   return res.status(200).json({ message: " Reastaurant created successfully" });
 }
 
@@ -238,10 +235,6 @@ async function getOwnerBookings(req, res) {
   try {
     const bookings = await Booking.find().populate("restaurant");
 
-    console.log("Logged in Owner:", req.user._id);
-
-    console.log("All Bookings:", bookings);
-
     const ownerBookings = bookings.filter((booking) => {
       console.log("Restaurant Owner:", booking.restaurant?.owner?.toString());
 
@@ -250,8 +243,6 @@ async function getOwnerBookings(req, res) {
         booking.restaurant.owner.toString() === req.user._id.toString()
       );
     });
-
-    console.log("Owner Bookings:", ownerBookings);
 
     return res.json(ownerBookings);
   } catch (error) {

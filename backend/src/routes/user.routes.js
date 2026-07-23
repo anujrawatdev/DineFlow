@@ -64,6 +64,10 @@ router.get(
 );
 router.get(
   "/admin/restaurants",
+  (req,res,next)=>{
+    console.log("ADMIN ROUTE HIT");
+    next();
+  },
   checkForAuthentication,
   checkForAdmin,
   getAllRestaurantsAdmin,
