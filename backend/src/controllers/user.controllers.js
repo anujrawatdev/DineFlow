@@ -195,7 +195,7 @@ async function bookRestaurant(req, res) {
 
   const restaurantExist = await Restaurant.findById(restaurant);
 
-  if (!restaurant) {
+  if (!restaurantExist) {
     return res.status(404).json({
       message: "Restaurant not found",
     });
@@ -263,6 +263,7 @@ async function updateBookingStatus(req, res) {
 
     return res.status(200).json({
       message: "Booking status updated successfully",
+      bookings,
     });
   } catch (error) {
     console.log("error:", error);
@@ -286,6 +287,15 @@ async function logout(req, res) {
   }
 }
 
+async function getCurrentUser(req,res){
+  return res.status(200).json({
+    name: req.user.name,
+    email:req.user.email,
+    role:req.user.role,
+    createdAt:req.user.createdAt,
+  });
+}
+
 module.exports = {
   createUser,
   loginUser,
@@ -299,4 +309,5 @@ module.exports = {
   getOwnerBookings,
   updateBookingStatus,
   logout,
+  getCurrentUser,
 };

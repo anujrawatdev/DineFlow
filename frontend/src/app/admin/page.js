@@ -3,13 +3,34 @@
 import DashboardCard from "@/components/admin/DashboardCard";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [stats, setStats] = useState({});
+  const router = useRouter();
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const fetchDashbaordData = async () => {
+
       try {
+
+        const profileResponse = await fetch(
+          "http://localhost:5000/profile",
+          {
+            credentials: "include",
+          }
+        );
+
+        const user = await profileResponse.json();
+
+        console.log("logges in user:",user);
+
+        if(user.role !== "admin"){
+          router.push("/home");
+          return;
+        }
+
         const response = await fetch("http://localhost:5000/admin/dashboard", {
           method: "GET",
           credentials: "include",
@@ -18,14 +39,20 @@ const Page = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch dashboard data");
         }
+
         const data = await response.json();
 
         setStats(data);
       } catch (error) {
         console.log("error:", error);
       }
+      finally{
+        setLoading(false);
+      }
     };
+
     fetchDashbaordData();
+
   }, []);
 
   return (
@@ -42,7 +69,7 @@ const Page = () => {
           {/* Navigation */}
           <nav className="flex flex-col gap-3">
             <Link
-              href="/users"
+              href="/admin"
               className="mt-3 hover:text-xl rounded-lg text-neutral-900 transition-all duration-200"
             >
               Dashboard

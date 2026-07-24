@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation";
 const Navbar = () => {
      const router = useRouter();
 
+     const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -42,6 +43,26 @@ const Navbar = () => {
       console.log("error:",error)
     }
   };
+
+    useEffect(() => {
+      async function userProfile() {
+        const reponse = await fetch("http://localhost:5000/profile", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await reponse.json();
+        setUser(data);
+      }
+      userProfile();
+    }, []);
+  
+    if (!user) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <nav
@@ -88,7 +109,7 @@ const Navbar = () => {
           className="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-white/10 transition"
         >
           <div className="h-10 w-10 rounded-full bg-amber-500 flex items-center justify-center font-bold text-white">
-            A
+            {user?.name?.charAt(0).toUpperCase()}
           </div>
 
           <ChevronDown
@@ -119,7 +140,7 @@ const Navbar = () => {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-red-900 hover:bg-red-300/35 transition"
+              className="w-full flex items-center gap-3 px-4 py-3 text-neutral-200 hover:bg-red-600 transition"
             >
               <LogOut size={18} />
               Logout

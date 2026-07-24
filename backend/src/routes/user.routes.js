@@ -14,6 +14,7 @@ const {
   getOwnerBookings,
   updateBookingStatus,
   logout,
+  getCurrentUser
 } = require("../controllers/user.controllers");
 const { checkForAuthentication } = require("../middleware/user");
 const upload = require("../middleware/upload.middleware");
@@ -44,44 +45,5 @@ router.get("/myBookings", checkForAuthentication, getBookings);
 router.get("/ownerBookings", checkForAuthentication, getOwnerBookings);
 router.patch("/ownerBookings/:id", checkForAuthentication, updateBookingStatus);
 router.post("/logout", checkForAuthentication, logout);
-router.get(
-  "/admin/dashboard",
-  checkForAuthentication,
-  checkForAdmin,
-  getDashboardStats,
-);
-router.get(
-  "/admin/users",
-  checkForAuthentication,
-  checkForAdmin,
-  getAllUsersAdmin,
-);
-router.get(
-  "/admin/bookings",
-  checkForAuthentication,
-  checkForAdmin,
-  getAllBookingsAdmin,
-);
-router.get(
-  "/admin/restaurants",
-  (req,res,next)=>{
-    console.log("ADMIN ROUTE HIT");
-    next();
-  },
-  checkForAuthentication,
-  checkForAdmin,
-  getAllRestaurantsAdmin,
-);
-router.delete(
-  "/admin/restaurants/:id",
-  checkForAuthentication,
-  checkForAdmin,
-  deleteRestaurantAdmin,
-);
-router.delete(
-  "/admin/users/:id",
-  checkForAuthentication,
-  checkForAdmin,
-  deleteUserAdmin,
-);
+router.get("/profile",checkForAuthentication,getCurrentUser);
 module.exports = router;

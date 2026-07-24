@@ -32,15 +32,15 @@ const page = () => {
 
     const data = await response.json();
 
-    console.log("Owner Bookings:", data);
-    console.log("API Response:", data);
-
-    setBookings(data);
+    setBookings((prev) =>
+  prev.map((booking) =>
+    booking._id === data._id ? data : booking
+  )
+);
 
     const text = await response.text();
-    console.log(text);
   };
-  console.log("Bookings:", bookings);
+  
   return (
     <>
       <OwnerNavbar />

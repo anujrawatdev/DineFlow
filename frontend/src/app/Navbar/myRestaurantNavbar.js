@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation";
 const Navbar = () => {
      const router = useRouter();
      
+     const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -43,6 +44,25 @@ const Navbar = () => {
     }
   };
 
+      useEffect(() => {
+        async function userProfile() {
+          const reponse = await fetch("http://localhost:5000/profile", {
+            method: "GET",
+            credentials: "include",
+          });
+          const data = await reponse.json();
+          setUser(data);
+        }
+        userProfile();
+      }, []);
+    
+      if (!user) {
+      return (
+        <div className="min-h-screen flex justify-center items-center">
+          Loading...
+        </div>
+      );
+    }
   return (
     <nav
       className="
@@ -69,14 +89,14 @@ const Navbar = () => {
         </Link>
 
         <Link
-          href="/AboutUs"
+          href="/home#AboutUs"
           className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all hover:after:w-full"
         >
           About Us
         </Link>
 
         <Link
-          href="/ContactUs"
+          href="/home#ContactUs"
           className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all hover:after:w-full"
         >
           Contact Us
@@ -88,7 +108,7 @@ const Navbar = () => {
           className="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-white/10 transition"
         >
           <div className="h-10 w-10 rounded-full bg-amber-500 flex items-center justify-center font-bold text-white">
-            A
+            {user?.name?.charAt(0).toUpperCase()}
           </div>
 
           <ChevronDown

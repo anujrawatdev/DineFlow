@@ -61,12 +61,15 @@ const getDashboardStats = async (req, res) => {
 const deleteRestaurantAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-   const restaurant = await Restaurant.findByIdAndDelete(id);
+   const restaurant = await Restaurant.findById(id);
     if(!restaurant){
         return res.status(404).json({
          message: "Restaurant not found",
          });
     }
+
+    await Restaurant.findByIdAndDelete(id);
+
     return res.status(200).json({
         message:"Restaurant deleted successfully",
     })
@@ -82,13 +85,27 @@ const deleteUserAdmin = async (req,res)=>{
     
 try {
     const id = req.params.id;
-    const user = await User.findByIdAndDelete(id);
+
+      if (req.user._id.toString() === id) {
+      return res.status(400).json({
+        message: "You cannot delete yourself",
+      });
+    }
+    
+    const user = await User.findById(id);
 
     if(!user){
       return res.status(404).json({
         message:"user not found"
       })
     }
+
+    await Booking.deleteMany({
+      user:id
+    });
+
+    await User.findByIdAndDelete(id);
+
     return res.status(200).json({
         message:"user deleted successfully"
     })
