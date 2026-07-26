@@ -33,14 +33,12 @@ const page = () => {
     const data = await response.json();
 
     setBookings((prev) =>
-  prev.map((booking) =>
-    booking._id === data._id ? data : booking
-  )
-);
+      prev.map((booking) => (booking._id === data._id ? data : booking)),
+    );
 
     const text = await response.text();
   };
-  
+
   return (
     <>
       <OwnerNavbar />

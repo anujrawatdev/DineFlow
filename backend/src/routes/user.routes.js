@@ -27,23 +27,25 @@ const {
   deleteRestaurantAdmin,
   deleteUserAdmin,
 } = require("../controllers/admin.controller");
+const { checkForOwner } = require("../middleware/owner");
 
 router.post("/signup", createUser);
 router.post("/login", loginUser);
 router.post(
   "/restaurant",
   checkForAuthentication,
+  checkForOwner,
   upload.single("restaurantImage"),
   createRestaurant,
 );
-router.get("/my-restaurants", checkForAuthentication, getMyRestaurants);
-router.delete("/my-restaurants/delete/:id", checkForAuthentication, deleteCard);
+router.get("/my-restaurants", checkForAuthentication , checkForOwner, getMyRestaurants);
+router.delete("/my-restaurants/delete/:id", checkForAuthentication,checkForOwner ,deleteCard);
 router.get("/restaurants", getAllRestaurants);
 router.get("/restaurants/:id", viewDetails);
 router.post("/bookings", checkForAuthentication, bookRestaurant);
 router.get("/myBookings", checkForAuthentication, getBookings);
-router.get("/ownerBookings", checkForAuthentication, getOwnerBookings);
-router.patch("/ownerBookings/:id", checkForAuthentication, updateBookingStatus);
+router.get("/ownerBookings", checkForAuthentication, checkForOwner,getOwnerBookings);
+router.patch("/ownerBookings/:id", checkForAuthentication, checkForOwner,updateBookingStatus);
 router.post("/logout", checkForAuthentication, logout);
 router.get("/profile",checkForAuthentication,getCurrentUser);
 module.exports = router;

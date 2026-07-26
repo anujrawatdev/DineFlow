@@ -96,6 +96,13 @@ const Page = () => {
               Bookings
             </Link>
             <hr className="text-black" />
+            <Link
+              href="/admin/ownerRequest"
+              className="mt-3 rounded-lg text-neutral-900 hover:text-xl transition-all duration-200"
+            >
+              Owner Requests
+            </Link>
+            <hr className="text-black" />
           </nav>
         </div>
 

@@ -84,7 +84,7 @@ const bookingSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-  required: true,
+      required: true,
     },
     restaurant: {
       type: mongoose.Schema.Types.ObjectId,
@@ -96,12 +96,12 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-  type: String,
-  required: true,
-},
-email: {
-  type: String,
-},
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+    },
     guests: {
       type: Number,
       required: true,
@@ -112,11 +112,11 @@ email: {
     },
     bookingTime: {
       type: String,
-       required: true,
+      required: true,
     },
-    specialRequest:{
-      type:String,
-      default:""
+    specialRequest: {
+      type: String,
+      default: "",
     },
     status: {
       type: String,

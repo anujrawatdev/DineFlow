@@ -9,6 +9,7 @@ import { motion, useScroll } from "framer-motion";
 import AboutUs from "./AboutUs/About.js";
 import ContactUs from "./ContactUs/page";
 import Footer from "./Footer/page";
+import RegisterAsOwner from "./RegisterAsOwner/page";
 
 const Page = () => {
   const [allRestaurants, setAllRestaurants] = useState([]);
@@ -103,7 +104,9 @@ const Page = () => {
         <div className="bg-[#0d0d0d]">
           <ContactUs />
         </div>
-
+        <div>
+          <RegisterAsOwner/>
+        </div>
         {/* FOOTER */}
         <Footer />
       </div>

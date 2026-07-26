@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, Restaurant, Booking } = require("../models/user.modles");
+const { User, Restaurant, Booking } = require("../models/user.model");
 
 //Create User
 async function createUser(req, res) {
@@ -236,7 +236,6 @@ async function getOwnerBookings(req, res) {
     const bookings = await Booking.find().populate("restaurant");
 
     const ownerBookings = bookings.filter((booking) => {
-      console.log("Restaurant Owner:", booking.restaurant?.owner?.toString());
 
       return (
         booking.restaurant &&
