@@ -14,7 +14,9 @@ const {
   getOwnerBookings,
   updateBookingStatus,
   logout,
-  getCurrentUser
+  getCurrentUser,
+  getRestaurantById,
+  updateRestaurant
 } = require("../controllers/user.controllers");
 const { checkForAuthentication } = require("../middleware/user");
 const upload = require("../middleware/upload.middleware");
@@ -40,6 +42,8 @@ router.post(
 );
 router.get("/my-restaurants", checkForAuthentication , checkForOwner, getMyRestaurants);
 router.delete("/my-restaurants/delete/:id", checkForAuthentication,checkForOwner ,deleteCard);
+router.get("/my-restaurants/:id",checkForAuthentication,checkForOwner,getRestaurantById);
+router.patch("/my-restaurant/update/:id",checkForAuthentication,checkForOwner,upload.single("restaurantImage"),updateRestaurant);
 router.get("/restaurants", getAllRestaurants);
 router.get("/restaurants/:id", viewDetails);
 router.post("/bookings", checkForAuthentication, bookRestaurant);
@@ -48,4 +52,5 @@ router.get("/ownerBookings", checkForAuthentication, checkForOwner,getOwnerBooki
 router.patch("/ownerBookings/:id", checkForAuthentication, checkForOwner,updateBookingStatus);
 router.post("/logout", checkForAuthentication, logout);
 router.get("/profile",checkForAuthentication,getCurrentUser);
+
 module.exports = router;

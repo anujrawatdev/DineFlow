@@ -1,8 +1,15 @@
+"use client"
+
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 const myRestaurantsCard = ({ restaurant }) => {
+
   console.log(restaurant);
+  const router = useRouter();
+
   const handleDelete = async (id) => {
     await fetch(`http://localhost:5000/my-restaurants/delete/${id}`, {
       method: "DELETE",
@@ -63,7 +70,9 @@ const myRestaurantsCard = ({ restaurant }) => {
           </Link>
 
           <div className="flex gap-2">
-            <button className="px-5 py-1 rounded-sm bg-gray-500 border border-gray-300 hover:bg-gray-600 ">
+            <button
+            onClick={() => router.push(`/myRestaurants/edit/${restaurant._id}`)} 
+            className="px-5 py-1 rounded-sm bg-gray-500 border border-gray-300 hover:bg-gray-600 ">
               Edit
             </button>
 

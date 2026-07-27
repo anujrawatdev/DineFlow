@@ -1,5 +1,6 @@
 import React from "react";
 import { Check, X } from "lucide-react";
+import { div } from "framer-motion/client";
 
 const OwnerRequestTable = ({ requests = [], onApprove, onReject }) => {
   return (
@@ -71,10 +72,10 @@ const OwnerRequestTable = ({ requests = [], onApprove, onReject }) => {
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         request.status === "approved"
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-green-300 text-green-800"
                           : request.status === "rejected"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-yellow-100 text-yellow-700"
+                            ? "bg-red-300 text-red-800"
+                            : "bg-yellow-200 text-yellow-800"
                       }`}
                     >
                       {request.status
@@ -84,8 +85,10 @@ const OwnerRequestTable = ({ requests = [], onApprove, onReject }) => {
                     </span>
                   </td>
 
-                  <td className="px-6 py-4 flex gap-3">
-                    <button
+                  <td className="px-6 py-4 ">
+                    {request.status === "pending"?(
+                      <div className="flex gap-3">
+                      <button
                       onClick={() => onApprove(request._id)}
                       className="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 text-white text-sm hover:bg-green-700"
                     >
@@ -100,6 +103,12 @@ const OwnerRequestTable = ({ requests = [], onApprove, onReject }) => {
                       <X size={16} />
                       Reject
                     </button>
+                    </div>
+                    ):(
+                      <span className="px-2 py-1 rounded-xl bg-blue-200 text-blue-900 text-sm">
+                        Checked
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))

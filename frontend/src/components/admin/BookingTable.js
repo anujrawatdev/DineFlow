@@ -91,7 +91,11 @@ const BookingTable = ({bookings}) => {
               </td>
 
               <td className="px-6 py-5">
-                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                <span className={`p-1 rounded-xl ${booking.status === "confirmed"
+                ? "bg-green-500"
+                : booking.status === "cancelled"
+                ? "bg-red-500"
+                : "bg-yellow-500"}`}>
                   {booking.status}
                 </span>
               </td>

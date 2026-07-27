@@ -1,7 +1,7 @@
 "use client";
 
-const userTable = ({users,loading}) => {
-  console.log(users);
+const userTable = ({users,loading , onDelete}) => {
+  
 
   return (
     <div className="flex-1 min-h-screen bg-gray-100 p-8">
@@ -69,7 +69,9 @@ const userTable = ({users,loading}) => {
               </td>
 
               <td className="px-6 py-5 text-center">
-                <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition">
+                <button 
+                onClick={()=> onDelete(user._id)}
+                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition">
                   Delete
                 </button>
               </td>

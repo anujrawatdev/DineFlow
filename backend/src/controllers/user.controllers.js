@@ -295,6 +295,64 @@ async function getCurrentUser(req,res){
   });
 }
 
+async function getRestaurantById(req,res){
+
+  try {
+    const { id }= req.params;
+
+    const restaurant = await Restaurant.findById(id);
+
+     if(!restaurant){
+      return res.status(404).json({message:"restaurantInfo not found"})
+    } 
+
+    if(restaurant.owner.toString()!== req.user._id.toString()){
+      return res.status(403).json({
+        message:'unauthorized',
+      })
+    }
+   
+     return res.status(200).json(restaurant);
+
+  } catch (error) {
+    return res.status(500).json({
+      messag:"something went wrong",
+      error:error.message,})
+  }
+}
+async function updateRestaurant(req,res){
+  const restaurant = await Restaurant.findById(req.params.id);
+  if(!restaurant){
+    return res.status(404).json({
+      message:"restaurant not found"
+    })
+  }
+  if(restaurant.owner.toString()!== req.user._id.toString()){
+    return res.status(403).json({message:"unauthorized"});
+  }
+
+  const {name,description,street,city,state,country,openingTime,closingTime,price,cuisine} = req.body;
+
+  restaurant.name = name;
+  restaurant.description = description;
+  restaurant.location = {
+    street,
+    city,
+    state,
+    country
+  };
+  restaurant.openingTime= openingTime;
+  restaurant.closingTime= closingTime;
+  restaurant.price = price;
+  restaurant.cuisine = cuisine;
+
+  if(req.file){
+    restaurant.restaurantImage = "/upload/" + req.file.filename;
+  }
+  await restaurant.save();
+
+  return  res.status(200).json({message:"Restaurant updated successfully"});
+}
 module.exports = {
   createUser,
   loginUser,
@@ -309,4 +367,6 @@ module.exports = {
   updateBookingStatus,
   logout,
   getCurrentUser,
+  getRestaurantById,
+  updateRestaurant
 };

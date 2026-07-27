@@ -19,30 +19,42 @@ const page = () => {
   }, []);
 
   const updateStatus = async (id, status) => {
-    const response = await fetch(`http://localhost:5000/ownerBookings/${id}`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        status: status,
-      }),
-    });
+    try {
+      const response = await fetch(
+        `http://localhost:5000/ownerBookings/${id}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: status,
+          }),
+        },
+      );
 
-    const data = await response.json();
+      if (response.ok) {
+        const data = await response.json();
 
-    setBookings((prev) =>
-      prev.map((booking) => (booking._id === data._id ? data : booking)),
-    );
-
-    const text = await response.text();
+        setBookings((prev) =>
+          prev.map((booking) =>
+            booking._id === data._id ? data : booking),
+        );
+      }
+      else{
+        const err = await response.json();
+        alert(err.message || "Failed to update booking status");
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
     <>
       <OwnerNavbar />
-      <div className=" p-34 p-10 min-h-screen bg-neutral-200">
+      <div className=" p-32 min-h-screen bg-neutral-200">
         <h1 className=" text-3xl text-amber-900 font-bold mb-8">
           Booking Requests
         </h1>

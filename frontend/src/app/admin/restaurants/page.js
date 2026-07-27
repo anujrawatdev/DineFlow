@@ -9,13 +9,15 @@ const page = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const reponse = await fetch("http://localhost:5000/admin/restaurants", {
+        const response = await fetch("http://localhost:5000/admin/restaurants", {
           method: "GET",
           credentials: "include",
         });
-
-        const data = await reponse.json();
+        console.log(response.status);
+        
+        const data = await response.json();
         console.log(data);
+
         setRestaurants(data);
       } catch (error) {
         console.log(error);
@@ -23,10 +25,20 @@ const page = () => {
     };
     fetchRestaurants();
   }, []);
+
+  const handleDelete = async (id) => {
+    const response = await fetch(`http://localhost:5000/admin/restaurants/${id}/delete`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await response.json();
+    setRestaurants((prev)=>prev.filter((restaurant)=> restaurant._id !== id))
+  };
   return (
     <div>
       <RestaurantTable 
-      restaurants = {restaurants}/>
+      restaurants = {restaurants}
+      onDelete={handleDelete}/>
     </div>
   );
 };

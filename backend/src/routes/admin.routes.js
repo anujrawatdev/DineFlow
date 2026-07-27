@@ -39,13 +39,13 @@ router.get(
   getAllRestaurantsAdmin,
 );
 router.delete(
-  "/admin/restaurants/:id",
+  "/admin/restaurants/:id/delete",
   checkForAuthentication,
   checkForAdmin,
   deleteRestaurantAdmin,
 );
 router.delete(
-  "/admin/users/:id",
+  "/admin/users/:id/delete",
   checkForAuthentication,
   checkForAdmin,
   deleteUserAdmin,
