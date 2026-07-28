@@ -6,6 +6,17 @@ import { useParams } from "next/navigation";
 import Footer from "@/app/home/Footer/page";
 import RestaurantsCard from "@/app/cards/RestaurantsCard";
 import Link from "next/link";
+import { 
+  MapPin, 
+  Clock, 
+  Star, 
+  Car, 
+  Wifi, 
+  Wind, 
+  Music, 
+  ArrowRight,
+  Sparkles
+} from "lucide-react";
 
 const Page = () => {
   const [restaurantDetail, setRestaurantDetail] = useState(null);
@@ -18,25 +29,32 @@ const Page = () => {
 
   useEffect(() => {
     const fetchRestaurants = async () => {
-      const response = await fetch("http://localhost:5000/restaurants", {
-        method: "GET",
-        credentials: "include",
-      });
-      const data = await response.json();
-      console.log(data);
-      setRestaurants(data);
+      try {
+        const response = await fetch("http://localhost:5000/restaurants", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setRestaurants(data);
+      } catch (error) {
+        console.error("Error fetching restaurants:", error);
+      }
     };
     fetchRestaurants();
   }, []);
+
   useEffect(() => {
     const fetchRestaurant = async () => {
-      const response = await fetch(`http://localhost:5000/restaurants/${id}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      const data = await response.json();
-      console.log(data);
-      setRestaurantDetail(data);
+      try {
+        const response = await fetch(`http://localhost:5000/restaurants/${id}`, {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setRestaurantDetail(data);
+      } catch (error) {
+        console.error("Error fetching restaurant details:", error);
+      }
     };
     if (id) {
       fetchRestaurant();
@@ -44,219 +62,244 @@ const Page = () => {
   }, [id]);
 
   if (!restaurantDetail) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-[#f8f5f0] flex items-center justify-center">
+        <p className="text-stone-500 font-serif text-lg animate-pulse">
+          Loading experience...
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-200">
+    <div className="min-h-screen bg-[#f8f5f0] text-stone-900 font-sans selection:bg-stone-300">
       <Navbar />
 
-      <div className="pt-32 flex justify-center px-6">
-        <div className=" w-full max-w-7xl bg-gray-600/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-          {/* Image */}
-          <div className="w-3/5 p-6">
-            <div className="h-full rounded-3xl bg-neutral-400 overflow-hidden shadow-xl">
+      {/* Main Hero Card Section */}
+      <div className="pt-28 md:pt-36 flex justify-center px-4 sm:px-6">
+        <div className="w-full max-w-7xl bg-[#FAF8F5] border border-stone-200/80 rounded-3xl shadow-sm overflow-hidden flex flex-col lg:flex-row">
+          
+          {/* Main Image */}
+          <div className="w-full lg:w-3/5 p-4 sm:p-6">
+            <div className="h-[350px] lg:h-full min-h-[380px] rounded-2xl bg-stone-200 overflow-hidden relative">
               <img
                 src={`http://localhost:5000${restaurantDetail.restaurantImage}`}
+                alt={restaurantDetail.name}
                 className="w-full h-full object-cover"
               />
             </div>
           </div>
 
-          {/* Details */}
-          <div className=" w-2/5 p-10 flex flex-col justify-between text-white">
+          {/* Details Section */}
+          <div className="w-full lg:w-2/5 p-6 sm:p-10 flex flex-col justify-between">
             <div>
-              <div className="flex justify-between items-center">
-                <h1 className="text-5xl text-black font-bold">
+              {/* Header & Rating */}
+              <div className="flex justify-between items-start gap-4">
+                <h1 className="text-3xl md:text-5xl font-serif font-normal text-stone-900 leading-tight">
                   {restaurantDetail.name}
                 </h1>
 
-                <div className="bg-green-600 px-4 py-1 rounded-xl font-semibold">
-                  ⭐ {restaurantDetail.rating}
+                <div className="flex items-center gap-1.5 bg-stone-900 text-stone-100 px-3 py-1.5 rounded-full text-xs font-medium shrink-0">
+                  <Star size={13} className="fill-amber-400 text-amber-400" />
+                  <span>{restaurantDetail.rating}</span>
                 </div>
               </div>
 
-              <p className=" text-neutral-900 mt-5 text-lg">
-                📍 {restaurantDetail.location.street},
-                {restaurantDetail.location.city},
-                {restaurantDetail.location.state}
+              {/* Location */}
+              <p className="text-stone-600 text-sm mt-4 flex items-center gap-2 font-light">
+                <MapPin size={16} className="text-stone-400 shrink-0" />
+                <span>
+                  {restaurantDetail.location?.street}, {restaurantDetail.location?.city},{" "}
+                  {restaurantDetail.location?.state}
+                </span>
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <span className="bg-[#8B5E3C] px-4 py-2 rounded-full">
+              {/* Tags & Price */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="bg-[#f0ebe3] border border-stone-300/60 text-stone-700 text-xs px-3.5 py-1.5 rounded-full font-medium">
                   {restaurantDetail.cuisine}
                 </span>
-
-                <span className="bg-[#8B5E3C] px-4 py-2 rounded-full">
+                <span className="bg-[#f0ebe3] border border-stone-300/60 text-stone-700 text-xs px-3.5 py-1.5 rounded-full font-medium">
                   Continental
                 </span>
-
-                <span className="bg-[#8B5E3C] px-4 py-2 rounded-full">
-                  ₹ {restaurantDetail.price} for two
+                <span className="bg-[#f0ebe3] border border-stone-300/60 text-stone-700 text-xs px-3.5 py-1.5 rounded-full font-medium">
+                  ₹{restaurantDetail.price} for two
                 </span>
               </div>
 
-              <div className="flex gap-4 mt-8">
-                <div className="bg-[#4B3225] px-4 py-2 rounded-xl">
-                  🕒 {restaurantDetail.openingTiming} AM
+              {/* Timing */}
+              <div className="flex items-center gap-3 mt-8 text-xs text-stone-700">
+                <div className="flex items-center gap-2 bg-[#f2eee9] px-4 py-2.5 rounded-xl border border-stone-200/70">
+                  <Clock size={14} className="text-stone-500" />
+                  <span>Opens {restaurantDetail.openingTiming} AM</span>
                 </div>
 
-                <div className="bg-[#4B3225] px-4 py-2 rounded-xl">
-                  🌙{restaurantDetail.closingTiming} PM
+                <div className="flex items-center gap-2 bg-[#f2eee9] px-4 py-2.5 rounded-xl border border-stone-200/70">
+                  <Clock size={14} className="text-stone-500" />
+                  <span>Closes {restaurantDetail.closingTiming} PM</span>
                 </div>
               </div>
             </div>
 
-            {/* Bottom */}
-            <div>
+            {/* CTA Button */}
+            <div className="mt-8">
               <Link href={`/restaurants/${id}/book`}>
-              <button className="w-full mt-10 bg-amber-800 hover:bg-neutral-300 hover:border-1 hover:border-amber-800 hover:text-amber-800 transition duration-300 text-neutral-200 font-bold py-4 rounded-2xl text-lg shadow-lg">
-                Book Restaurant
-              </button>
+                <button className="w-full bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs uppercase tracking-[0.2em] font-sans py-4 rounded-full transition-all duration-300 shadow-sm">
+                  Book Table
+                </button>
               </Link>
             </div>
           </div>
         </div>
       </div>
-      {/* Extra Details Section */}
-      <div className="max-w-7xl mx-auto px-6 pb-20">
+
+      {/* Extra Details Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-24 space-y-16 mt-16">
+        
         {/* Restaurant Tags */}
-        <div className="mt-10">
-          <h2 className="text-3xl font-bold text-neutral-800">Restaurant Tags</h2>
-
-          <div className="flex flex-wrap gap-3 mt-5">
-            <span className="bg-[#8B5E3C] text-white px-5 py-2 rounded-full">
-              Family Dining
-            </span>
-
-            <span className="bg-[#8B5E3C] text-white px-5 py-2 rounded-full">
-              Premium Cafe
-            </span>
-
-            <span className="bg-[#8B5E3C] text-white px-5 py-2 rounded-full">
-              Romantic
-            </span>
-
-            <span className="bg-[#8B5E3C] text-white px-5 py-2 rounded-full">
-              Outdoor Seating
-            </span>
+        <div>
+          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
+            Ambiance & Features
+          </h2>
+          <div className="flex flex-wrap gap-2.5 mt-6">
+            {["Family Dining", "Premium Cafe", "Romantic Setting", "Outdoor Seating"].map((tag, idx) => (
+              <span
+                key={idx}
+                className="bg-[#FAF8F5] border border-stone-200 text-stone-700 text-xs tracking-wide px-4 py-2 rounded-full font-light"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
 
         {/* Facilities */}
-
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold text-neutral-700">Facilities</h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-6">
-            <div className="bg-white/60 shadow-lg rounded-2xl p-5 text-neutral-900 text-xl font-bold text-center">
-              🚗
-              <p>Parking</p>
+        <div>
+          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
+            Key Amenities
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
+              <Car size={22} className="text-stone-700" />
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Valet Parking</p>
             </div>
 
-            <div className="bg-white/60 shadow-lg rounded-2xl text-neutral-900 text-xl font-bold p-5 text-center">
-              📶
-              <p>Free WiFi</p>
+            <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
+              <Wifi size={22} className="text-stone-700" />
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Free High-Speed Wi-Fi</p>
             </div>
 
-            <div className="bg-white/60 shadow-lg rounded-2xl text-neutral-900 text-xl font-bold p-5 text-center">
-              ❄️
-              <p>AC</p>
+            <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
+              <Wind size={22} className="text-stone-700" />
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Air Conditioned</p>
             </div>
 
-            <div className="bg-white/60 shadow-lg rounded-2xl text-neutral-900 text-xl font-bold p-5 text-center">
-              🎵
-              <p>Live Music</p>
+            <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
+              <Music size={22} className="text-stone-700" />
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Live Acoustic Music</p>
             </div>
           </div>
         </div>
 
         {/* Image Gallery */}
-
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold text-neutral-700">Gallery</h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-6">
-            <div className="h-40 bg-neutral-400 rounded-2xl">
-              <img src="/images/Background-form.jpg" />
+        <div>
+          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
+            Gallery
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div className="h-44 bg-stone-200 rounded-2xl overflow-hidden border border-stone-200">
+              <img
+                src="/images/Background-form.jpg"
+                alt="Gallery preview"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
-
-            <div className="h-40 bg-neutral-400 rounded-2xl"></div>
-
-            <div className="h-40 bg-neutral-400 rounded-2xl"></div>
-
-            <div className="h-40 bg-neutral-400 rounded-2xl"></div>
+            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
+              Interior View
+            </div>
+            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
+              Dining Area
+            </div>
+            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
+              Signature Dish
+            </div>
           </div>
         </div>
 
-        {/* Reviews */}
-
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold text-neutral-700">Customer Reviews</h2>
-
+        {/* Guest Reviews */}
+        <div>
+          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
+            Guest Experiences
+          </h2>
           <div className="grid md:grid-cols-3 gap-6 mt-6">
-            <div className="bg-white/70 rounded-2xl p-6 shadow-lg">
-              <h3 className=" text-neutral-800 font-bold">Rahul</h3>
-
-              <p className="mt-3">⭐⭐⭐⭐⭐</p>
-
-              <p className="mt-3 text-neutral-700">
-                Amazing ambience and delicious food.
-              </p>
-            </div>
-
-            <div className="bg-white/70 rounded-2xl p-6 shadow-lg">
-              <h3 className=" text-neutral-800 font-bold">Aman</h3>
-
-              <p className="mt-3">⭐⭐⭐⭐</p>
-
-              <p className="mt-3 text-neutral-700">
-                Great place for family dinner.
-              </p>
-            </div>
-
-            <div className="bg-white/70 rounded-2xl p-6 shadow-lg">
-              <h3 className=" text-neutral-800 font-bold">Priya</h3>
-
-              <p className="mt-3">⭐⭐⭐⭐⭐</p>
-
-              <p className="mt-3 text-neutral-700">Loved the service.</p>
-            </div>
+            {[
+              { name: "Rahul", text: "Exceptional atmosphere and subtle, delicious flavors. Perfect for special occasions.", rating: 5 },
+              { name: "Aman", text: "Great hospitality and prompt service. The ambient lighting made our dinner delightful.", rating: 4 },
+              { name: "Priya", text: "Loved every course served. Impeccable attention to detail from the staff.", rating: 5 }
+            ].map((review, idx) => (
+              <div key={idx} className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-1 mb-3">
+                    {Array.from({ length: review.rating }).map((_, i) => (
+                      <Star key={i} size={14} className="fill-stone-800 text-stone-800" />
+                    ))}
+                  </div>
+                  <p className="text-stone-600 text-xs sm:text-sm font-light leading-relaxed">
+                    "{review.text}"
+                  </p>
+                </div>
+                <h3 className="text-stone-900 font-serif font-normal text-sm mt-6 pt-4 border-t border-stone-200/60">
+                  {review.name}
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Similar Restaurants */}
-
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold text-neutral-700">You may also like</h2>
+        <div>
+          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
+            You May Also Appreciate
+          </h2>
 
           <div className="grid md:grid-cols-3 gap-6 mt-6">
             {similarRestaurants.map((restaurant) => (
               <RestaurantsCard key={restaurant._id} restaurant={restaurant} />
-            ))
-            }
+            ))}
           </div>
-          <div className="flex justify-center mt-12">
+
+          <div className="flex justify-center mt-10">
             <Link href="/restaurants">
-              <button className="bg-amber-700 hover:bg-amber-600 text-white font-semibold rounded-2xl px-6 py-2.5 transition-all duration-300">
-                View All Restaurants →
+              <button className="flex items-center gap-2 border border-stone-300 hover:border-stone-900 bg-transparent text-stone-800 text-xs uppercase tracking-[0.15em] font-medium px-6 py-3 rounded-full transition-all duration-300">
+                <span>View All Establishments</span>
+                <ArrowRight size={14} />
               </button>
             </Link>
           </div>
         </div>
 
-        {/* Final CTA */}
-
-        <div className="mt-16 bg-[#4B3225] rounded-3xl p-10 text-center">
-          <h2 className="text-3xl text-white font-bold">
-            Ready for a memorable dining experience?
-          </h2>
-
-          <button className="mt-6 bg-amber-400 hover:bg-yellow-600 transition text-neutral-800 font-bold px-10 py-4 rounded-2xl">
-            Book Your Table Now
-          </button>
+        {/* Final CTA Banner */}
+        <div className="bg-stone-900 rounded-3xl p-10 md:p-14 text-center text-[#FAF8F5] relative overflow-hidden">
+          <div className="relative z-10 max-w-xl mx-auto space-y-4">
+            <Sparkles size={20} className="mx-auto text-amber-300/80 mb-2" />
+            <h2 className="text-2xl md:text-4xl font-serif font-normal tracking-tight">
+              Ready for a Memorable Experience?
+            </h2>
+            <p className="text-stone-400 text-xs md:text-sm font-light leading-relaxed">
+              Reserve your table ahead of time to ensure ideal seating for your occasion.
+            </p>
+            <div className="pt-4">
+              <Link href={`/restaurants/${id}/book`}>
+                <button className="bg-[#FAF8F5] hover:bg-stone-200 text-stone-900 text-xs uppercase tracking-[0.2em] font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-sm">
+                  Book Your Table Now
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
+
       </div>
+
       <Footer />
     </div>
   );
