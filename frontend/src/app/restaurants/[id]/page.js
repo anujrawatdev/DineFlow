@@ -6,16 +6,16 @@ import { useParams } from "next/navigation";
 import Footer from "@/app/home/Footer/page";
 import RestaurantsCard from "@/app/cards/RestaurantsCard";
 import Link from "next/link";
-import { 
-  MapPin, 
-  Clock, 
-  Star, 
-  Car, 
-  Wifi, 
-  Wind, 
-  Music, 
+import {
+  MapPin,
+  Clock,
+  Star,
+  Car,
+  Wifi,
+  Wind,
+  Music,
   ArrowRight,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 const Page = () => {
@@ -46,10 +46,13 @@ const Page = () => {
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/restaurants/${id}`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          `http://localhost:5000/restaurants/${id}`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
         const data = await response.json();
         setRestaurantDetail(data);
       } catch (error) {
@@ -78,7 +81,6 @@ const Page = () => {
       {/* Main Hero Card Section */}
       <div className="pt-28 md:pt-36 flex justify-center px-4 sm:px-6">
         <div className="w-full max-w-7xl bg-[#FAF8F5] border border-stone-200/80 rounded-3xl shadow-sm overflow-hidden flex flex-col lg:flex-row">
-          
           {/* Main Image */}
           <div className="w-full lg:w-3/5 p-4 sm:p-6">
             <div className="h-[350px] lg:h-full min-h-[380px] rounded-2xl bg-stone-200 overflow-hidden relative">
@@ -109,7 +111,8 @@ const Page = () => {
               <p className="text-stone-600 text-sm mt-4 flex items-center gap-2 font-light">
                 <MapPin size={16} className="text-stone-400 shrink-0" />
                 <span>
-                  {restaurantDetail.location?.street}, {restaurantDetail.location?.city},{" "}
+                  {restaurantDetail.location?.street},{" "}
+                  {restaurantDetail.location?.city},{" "}
                   {restaurantDetail.location?.state}
                 </span>
               </p>
@@ -155,14 +158,18 @@ const Page = () => {
 
       {/* Extra Details Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-24 space-y-16 mt-16">
-        
         {/* Restaurant Tags */}
         <div>
           <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
             Ambiance & Features
           </h2>
           <div className="flex flex-wrap gap-2.5 mt-6">
-            {["Family Dining", "Premium Cafe", "Romantic Setting", "Outdoor Seating"].map((tag, idx) => (
+            {[
+              "Family Dining",
+              "Premium Cafe",
+              "Romantic Setting",
+              "Outdoor Seating",
+            ].map((tag, idx) => (
               <span
                 key={idx}
                 className="bg-[#FAF8F5] border border-stone-200 text-stone-700 text-xs tracking-wide px-4 py-2 rounded-full font-light"
@@ -181,76 +188,129 @@ const Page = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
               <Car size={22} className="text-stone-700" />
-              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Valet Parking</p>
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">
+                Valet Parking
+              </p>
             </div>
 
             <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
               <Wifi size={22} className="text-stone-700" />
-              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Free High-Speed Wi-Fi</p>
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">
+                Free High-Speed Wi-Fi
+              </p>
             </div>
 
             <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
               <Wind size={22} className="text-stone-700" />
-              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Air Conditioned</p>
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">
+                Air Conditioned
+              </p>
             </div>
 
             <div className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 text-center flex flex-col items-center justify-center gap-2">
               <Music size={22} className="text-stone-700" />
-              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">Live Acoustic Music</p>
+              <p className="text-xs uppercase tracking-wider text-stone-800 font-medium mt-1">
+                Live Acoustic Music
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Image Gallery */}
         <div>
-          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
-            Gallery
-          </h2>
+          <div className="flex items-center justify-between border-b border-stone-200/80 pb-3">
+            <h2 className="text-2xl font-serif font-normal text-stone-900">
+              Gallery
+            </h2>
+
+            <span className="text-xs text-stone-500">
+              Sample images for UI preview
+            </span>
+          </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-            <div className="h-44 bg-stone-200 rounded-2xl overflow-hidden border border-stone-200">
+            <div className="h-44 rounded-2xl overflow-hidden border border-stone-200">
               <img
                 src="/images/Background-form.jpg"
-                alt="Gallery preview"
+                alt="Restaurant ambience"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
-            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
-              Interior View
+
+            <div className="h-44 rounded-2xl overflow-hidden border border-stone-200">
+              <img
+                src="/images/interiorImage.jpg"
+                alt="Interior view"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
-            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
-              Dining Area
+
+            <div className="h-44 rounded-2xl overflow-hidden border border-stone-200">
+              <img
+                src="/images/diningArea.jpg"
+                alt="Dining area"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
-            <div className="h-44 bg-stone-200/60 rounded-2xl border border-stone-200/80 flex items-center justify-center text-stone-400 text-xs tracking-wider uppercase">
-              Signature Dish
+
+            <div className="h-44 rounded-2xl overflow-hidden border border-stone-200">
+              <img
+                src="/images/signatureDish.jpg"
+                alt="Signature dish"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
           </div>
         </div>
 
-        {/* Guest Reviews */}
+        {/* Guest Highlights (UI Placeholder) */}
         <div>
-          <h2 className="text-2xl font-serif font-normal text-stone-900 border-b border-stone-200/80 pb-3">
-            Guest Experiences
-          </h2>
+          <div className="flex items-center justify-between border-b border-stone-200/80 pb-3">
+            <h2 className="text-2xl font-serif font-normal text-stone-900">
+              Guest Highlights
+            </h2>
+            <span className="text-xs text-stone-500">
+              Sample feedback for UI preview
+            </span>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-6 mt-6">
             {[
-              { name: "Rahul", text: "Exceptional atmosphere and subtle, delicious flavors. Perfect for special occasions.", rating: 5 },
-              { name: "Aman", text: "Great hospitality and prompt service. The ambient lighting made our dinner delightful.", rating: 4 },
-              { name: "Priya", text: "Loved every course served. Impeccable attention to detail from the staff.", rating: 5 }
+              {
+                text: "Guests often appreciate the calm ambience and comfortable seating.",
+                rating: 5,
+              },
+              {
+                text: "Easy booking flow and a pleasant dining environment are commonly highlighted.",
+                rating: 4,
+              },
+              {
+                text: "Freshly prepared food and attentive service are among the most appreciated aspects.",
+                rating: 5,
+              },
             ].map((review, idx) => (
-              <div key={idx} className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 flex flex-col justify-between">
+              <div
+                key={idx}
+                className="bg-[#FAF8F5] border border-stone-200/80 rounded-2xl p-6 flex flex-col justify-between"
+              >
                 <div>
                   <div className="flex items-center gap-1 mb-3">
                     {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star key={i} size={14} className="fill-stone-800 text-stone-800" />
+                      <Star
+                        key={i}
+                        size={14}
+                        className="fill-stone-800 text-stone-800"
+                      />
                     ))}
                   </div>
+
                   <p className="text-stone-600 text-xs sm:text-sm font-light leading-relaxed">
-                    "{review.text}"
+                    {review.text}
                   </p>
                 </div>
-                <h3 className="text-stone-900 font-serif font-normal text-sm mt-6 pt-4 border-t border-stone-200/60">
-                  {review.name}
-                </h3>
+
+                <p className="text-stone-500 text-xs mt-6 pt-4 border-t border-stone-200/60">
+                  Placeholder content
+                </p>
               </div>
             ))}
           </div>
@@ -286,7 +346,8 @@ const Page = () => {
               Ready for a Memorable Experience?
             </h2>
             <p className="text-stone-400 text-xs md:text-sm font-light leading-relaxed">
-              Reserve your table ahead of time to ensure ideal seating for your occasion.
+              Reserve your table ahead of time to ensure ideal seating for your
+              occasion.
             </p>
             <div className="pt-4">
               <Link href={`/restaurants/${id}/book`}>
@@ -297,7 +358,6 @@ const Page = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       <Footer />

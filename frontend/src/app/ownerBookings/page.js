@@ -1,147 +1,8 @@
-// "use client";
-// import React from "react";
-// import { useState, useEffect } from "react";
-// import OwnerNavbar from "../Navbar/onwerNavbar";
-
-// const page = () => {
-//   const [bookings, setBookings] = useState([]);
-
-//   useEffect(() => {
-//     const fetchBookings = async () => {
-//       const response = await fetch("http://localhost:5000/ownerBookings", {
-//         method: "GET",
-//         credentials: "include",
-//       });
-//       const data = await response.json();
-//       setBookings(data);
-//     };
-//     fetchBookings();
-//   }, []);
-
-//   const updateStatus = async (id, status) => {
-//     try {
-//       const response = await fetch(
-//         `http://localhost:5000/ownerBookings/${id}`,
-//         {
-//           method: "PATCH",
-//           credentials: "include",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             status: status,
-//           }),
-//         },
-//       );
-
-//       if (response.ok) {
-//         const data = await response.json();
-
-//         setBookings((prev) =>
-//           prev.map((booking) =>
-//             booking._id === data._id ? data : booking),
-//         );
-//       }
-//       else{
-//         const err = await response.json();
-//         alert(err.message || "Failed to update booking status");
-//       }
-//     } catch (error) {
-//       console.log("error", error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <OwnerNavbar />
-//       <div className=" p-32 min-h-screen bg-neutral-200">
-//         <h1 className=" text-3xl text-amber-900 font-bold mb-8">
-//           Booking Requests
-//         </h1>
-
-//         <div className="overflow-x-auto">
-//           <table className="w-full bg-white rounded-xl shadow">
-//             <thead>
-//               <tr className="bg-[#4B3225] text-white">
-//                 <th className="p-4">Customer</th>
-//                 <th className="p-4">Restaurant</th>
-//                 <th className="p-4">Date</th>
-//                 <th className="p-4">Time</th>
-//                 <th className="p-4">Guests</th>
-//                 <th className="p-4">Status</th>
-//                 <th className="p-4">Action</th>
-//               </tr>
-//             </thead>
-
-//             <tbody>
-//               {bookings.map((booking) => (
-//                 <tr key={booking._id} className="border-b text-center">
-//                   <td className=" text-neutral-800 p-4">{booking.name}</td>
-
-//                   <td className="p-4 text-neutral-800">
-//                     {booking.restaurant.name}
-//                   </td>
-
-//                   <td className="p-4 text-neutral-800">
-//                     {new Date(booking.bookingDate).toLocaleDateString()}
-//                   </td>
-
-//                   <td className="p-4 text-neutral-800">
-//                     {booking.bookingTime}
-//                   </td>
-
-//                   <td className="p-4 text-neutral-800">{booking.guests}</td>
-
-//                   <td className="p-4 text-neutral-800">
-//                     <span
-//                       className={`px-3 py-1 rounded-full ${
-//                         booking.status === "confirmed"
-//                           ? "bg-green-200 text-green-800"
-//                           : booking.status === "cancelled"
-//                             ? "bg-red-200 text-red-900"
-//                             : "bg-yellow-200 text-yellow-800"
-//                       }`}
-//                     >
-//                       {booking.status}
-//                     </span>
-//                   </td>
-
-//                   <td className="p-4 flex gap-3 justify-center">
-//                     {booking.status === "pending" && (
-//                       <>
-//                         <button
-//                           onClick={() => updateStatus(booking._id, "confirmed")}
-//                           className="bg-green-600 text-white px-4 py-2 rounded-lg"
-//                         >
-//                           Accept
-//                         </button>
-
-//                         <button
-//                           onClick={() => updateStatus(booking._id, "cancelled")}
-//                           className="bg-red-600 text-white px-4 py-2 rounded-lg"
-//                         >
-//                           Reject
-//                         </button>
-//                       </>
-//                     )}
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default page;
-
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import OwnerNavbar from "../Navbar/onwerNavbar";
-
+import Navbar from "../Navbar/Navbar";
+import { toast } from "sonner";
 const Page = () => {
   const [bookings, setBookings] = useState([]);
 
@@ -185,7 +46,9 @@ const Page = () => {
 
       if (response.ok) {
         setBookings((prev) =>
-          prev.map((booking) => (booking._id === data._id ? data : booking)),
+          prev.map((booking) =>
+            booking._id === id ? { ...booking, status } : booking,
+          ),
         );
         toast.success(
           status === "confirmed"
@@ -194,7 +57,6 @@ const Page = () => {
           { id: loadingToast },
         );
       } else {
-        const err = await response.json();
         toast.error(err.message || "Failed to update booking status", {
           id: loadingToast,
         });
@@ -221,7 +83,7 @@ const Page = () => {
 
   return (
     <>
-      <OwnerNavbar />
+      <Navbar />
       <main className="pt-32 pb-20 min-h-screen bg-[#FDFCFB] text-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6">
           {/* Header */}
@@ -295,18 +157,30 @@ const Page = () => {
                           {booking.status === "pending" ? (
                             <div className="flex gap-2 justify-end">
                               <button
-                                onClick={() =>
-                                  updateStatus(booking._id, "confirmed")
-                                }
+                                onClick={() => {
+                                  if (
+                                    confirm(
+                                      "are you sure want to accept this request?",
+                                    )
+                                  ) {
+                                    updateStatus(booking._id, "confirmed");
+                                  }
+                                }}
                                 className="bg-[#1A1A1A] hover:bg-[#333333] text-white text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full transition shadow-sm"
                               >
                                 Accept
                               </button>
 
                               <button
-                                onClick={() =>
-                                  updateStatus(booking._id, "cancelled")
-                                }
+                                onClick={() => {
+                                  if (
+                                    confirm(
+                                      "are you sure want to reject this request?",
+                                    )
+                                  ) {
+                                    updateStatus(booking._id, "cancelled");
+                                  }
+                                }}
                                 className="border border-[#E5E2DE] bg-white hover:bg-[#F7F5F2] text-[#9B2C2C] text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-full transition"
                               >
                                 Reject
