@@ -142,7 +142,7 @@ const RestaurantTable = ({
                         <div className="w-16 h-16 rounded-xl border border-[#E5E2DE] bg-[#F7F5F2] overflow-hidden flex items-center justify-center">
                           {restaurant.restaurantImage ? (
                             <img
-                              src={`http://localhost:5000/${restaurant.restaurantImage}`}
+                              src={`${process.env.NEXT_PUBLIC_API_URL}/${restaurant.restaurantImage}`}
                               alt={restaurant.name}
                               className="w-full h-full object-cover"
                             />
@@ -230,7 +230,7 @@ const RestaurantTable = ({
                   <div className="w-20 h-20 rounded-2xl border border-[#E5E2DE] bg-[#F7F5F2] overflow-hidden flex items-center justify-center shrink-0">
                     {restaurant.restaurantImage ? (
                       <img
-                        src={`http://localhost:5000/${restaurant.restaurantImage}`}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${restaurant.restaurantImage}`}
                         alt={restaurant.name}
                         className="w-full h-full object-cover"
                       />

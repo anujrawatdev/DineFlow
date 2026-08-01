@@ -12,7 +12,7 @@ const Page = () => {
   useEffect(() => {
     async function userProfile() {
       try {
-        const response = await fetch("http://localhost:5000/profile", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
           method: "GET",
           credentials: "include",
         });
@@ -27,7 +27,7 @@ const Page = () => {
   }, []);
 
   const updateProfile = async () => {
-    const response = await fetch("http://localhost:5000/profile/update", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/update`, {
       method: "PATCH",
       credentials: "include",
       headers: {
@@ -61,7 +61,7 @@ const Page = () => {
   return (
     <main className="min-h-screen bg-[#FDFCFB] flex items-center justify-center px-6 py-16 text-[#1A1A1A]">
       <div className="w-full max-w-2xl">
-        {/* Header */}
+        
         <div className="text-center mb-8">
           <p className="text-xs tracking-[0.25em] uppercase text-[#7A6A5C] font-semibold">
             Account Details
@@ -71,9 +71,9 @@ const Page = () => {
           </h1>
         </div>
 
-        {/* Profile Card */}
+        
         <div className="rounded-2xl border border-[#E5E2DE] bg-white p-8 md:p-10 shadow-sm">
-          {/* Avatar & Main Info */}
+          
           <div className="flex flex-col items-center border-b border-[#E5E2DE] pb-8">
             <div className="w-24 h-24 rounded-full bg-[#F7F5F2] border border-[#E5E2DE] flex items-center justify-center text-3xl font-serif text-[#1A1A1A] mb-4 shadow-sm">
               {user?.name?.charAt(0).toUpperCase()}
@@ -100,7 +100,7 @@ const Page = () => {
             </span>
           </div>
 
-          {/* Details Grid */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
             <div className="rounded-xl border border-[#E5E2DE] bg-[#FDFCFB] p-5">
               <div className="flex items-center gap-2 text-[#7A6A5C] mb-1">
@@ -157,7 +157,7 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          
           <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-4 border-t border-[#E5E2DE]">
             {isEditing?(
               <>

@@ -31,7 +31,7 @@ const OwnerNavbar = () => {
   useEffect(() => {
     async function getUser() {
       try {
-        const response = await fetch("http://localhost:5000/profile", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
           method: "GET",
           credentials: "include",
         });
@@ -70,7 +70,7 @@ const OwnerNavbar = () => {
     const loadingToast = toast.loading("Logging out...");
 
     try {
-      const response = await fetch("http://localhost:5000/logout", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
         method: "POST",
         credentials: "include",
       });

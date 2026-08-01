@@ -27,7 +27,7 @@ const Page = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch("http://localhost:5000/profile", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
           method: "GET",
           credentials: "include",
         });
@@ -59,7 +59,7 @@ const Page = () => {
     const fetchRestaurant = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/restaurants/${params.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/restaurants/${params.id}`,
         );
         const data = await response.json();
         setRestaurant(data);
@@ -88,7 +88,7 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/bookings", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

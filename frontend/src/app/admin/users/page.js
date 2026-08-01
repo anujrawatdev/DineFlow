@@ -10,7 +10,7 @@ const page = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/admin/users", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`, {
           method: "GET",
           credentials: "include",
         });
@@ -28,7 +28,7 @@ const page = () => {
   const handleDelete = async (id) => {
   try {
       const response = await fetch(
-      `http://localhost:5000/admin/users/${id}/delete`,
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/users/${id}/delete`,
       {
         method: "DELETE",
         credentials: "include",

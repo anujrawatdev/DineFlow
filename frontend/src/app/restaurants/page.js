@@ -14,7 +14,7 @@ const Page = () => {
   useEffect(() => {
     const fetchAllRestaurants = async () => {
       try {
-        const response = await fetch("http://localhost:5000/restaurants", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`, {
           method: "GET",
           credentials: "include",
         });

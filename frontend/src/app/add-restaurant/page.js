@@ -139,7 +139,7 @@ const Page = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/restaurant", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`, {
         method: "POST",
         credentials: "include",
         body: formData,
@@ -222,7 +222,6 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Location */}
 
               <div className="space-y-6">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
@@ -287,7 +286,6 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Operations */}
 
               <div className="space-y-6">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
@@ -372,8 +370,6 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Media */}
 
               <div className="space-y-4">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">

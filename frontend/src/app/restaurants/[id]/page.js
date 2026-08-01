@@ -30,7 +30,7 @@ const Page = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await fetch("http://localhost:5000/restaurants", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`, {
           method: "GET",
           credentials: "include",
         });
@@ -47,7 +47,7 @@ const Page = () => {
     const fetchRestaurant = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/restaurants/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/restaurants/${id}`,
           {
             method: "GET",
             credentials: "include",
@@ -85,7 +85,7 @@ const Page = () => {
           <div className="w-full lg:w-3/5 p-3 sm:p-4 md:p-5 lg:p-6">
             <div className="h-64 sm:h-80 md:h-[420px] lg:h-full lg:min-h-[560px] rounded-xl sm:rounded-2xl bg-stone-200 overflow-hidden relative">
               <img
-                src={`http://localhost:5000${restaurantDetail.restaurantImage}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${restaurantDetail.restaurantImage}`}
                 alt={restaurantDetail.name}
                 className="w-full h-full object-cover"
               />

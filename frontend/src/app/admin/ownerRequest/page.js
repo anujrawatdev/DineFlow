@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import OwnerRequestTable from "@/components/admin/OwnerRequestTable";
@@ -14,7 +12,7 @@ const OwnerRequestPage = () => {
     const fetchRequests = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5000/owner-requests", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owner-requests`, {
           method: "GET",
           credentials: "include",
         });
@@ -45,7 +43,7 @@ const OwnerRequestPage = () => {
   const handleApprove = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/owner-requests/${id}/approve`,
+        `${process.env.NEXT_PUBLIC_API_URL}/owner-requests/${id}/approve`,
         {
           method: "PATCH",
           credentials: "include",
@@ -53,7 +51,7 @@ const OwnerRequestPage = () => {
       );
 
       if (response.ok) {
-        // Update request status locally or filter out depending on desired flow
+        
         setRequests((prev) =>
           prev.map((req) =>
             req._id === id ? { ...req, status: "approved" } : req
@@ -71,7 +69,7 @@ const OwnerRequestPage = () => {
   const handleReject = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/owner-requests/${id}/reject`,
+        `${process.env.NEXT_PUBLIC_API_URL}/owner-requests/${id}/reject`,
         {
           method: "PATCH",
           credentials: "include",
@@ -132,7 +130,7 @@ const OwnerRequestPage = () => {
           </div>
         </div>
 
-        {/* Request Table */}
+        
         <div className="-mx-8 md:-mx-12">
           <OwnerRequestTable
             requests={requests}

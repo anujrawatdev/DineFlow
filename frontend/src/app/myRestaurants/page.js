@@ -13,7 +13,7 @@ const Page = () => {
     const fetchRestaurants = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/my-restaurants",
+          `${process.env.NEXT_PUBLIC_API_URL}/my-restaurants`,
           {
             method: "GET",
             credentials: "include",
@@ -37,7 +37,7 @@ const Page = () => {
       <main className="min-h-screen w-full overflow-x-hidden bg-[#FDFCFB] pt-20 xs:pt-24 sm:pt-28 md:pt-32 pb-10 sm:pb-16 text-[#1A1A1A]">
         <div className="mx-auto w-full max-w-7xl px-3.5 sm:px-6 md:px-8 lg:px-10">
 
-          {/* Hero Banner */}
+          
           <div className="mb-5 sm:mb-8 md:mb-10 rounded-2xl sm:rounded-3xl bg-[#111111] text-white p-4.5 xs:p-5 sm:p-6 md:p-8 lg:p-10 border border-white/10 shadow-xl transition-all duration-300">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 md:gap-8">
 
@@ -68,7 +68,7 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Stats Card */}
+          
           <div className="mb-6 sm:mb-8 md:mb-10 rounded-2xl md:rounded-3xl border border-[#E5E2DE] bg-[#F7F5F2] p-4 xs:p-5 sm:p-6 md:p-7 shadow-sm transition-all duration-300">
             <div className="flex items-center gap-3.5 sm:gap-4 md:gap-5">
               <div className="flex h-11 w-11 xs:h-12 xs:w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 items-center justify-center rounded-full border border-[#DCD6CD] bg-white text-[#1A1A1A] shrink-0 shadow-xs">
@@ -87,7 +87,7 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Restaurants Grid */}
+          
           {restaurants.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-5 sm:gap-6 md:gap-7 lg:gap-8 justify-items-center">
               {restaurants.map((restaurant) => (
@@ -98,7 +98,7 @@ const Page = () => {
               ))}
             </div>
           ) : (
-            /* Empty State */
+            
             <div className="rounded-2xl md:rounded-3xl border border-dashed border-[#C9BDB0] bg-[#F7F5F2] p-6 xs:p-8 sm:p-12 md:p-16 text-center shadow-sm transition-all duration-300">
               <div className="mx-auto mb-3.5 sm:mb-6 flex h-14 w-14 xs:h-16 xs:w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-full border border-[#DCD6CD] bg-white text-[#1A1A1A] shadow-xs">
                 <Store size={26} className="xs:w-7 xs:h-7 sm:w-9 sm:h-9 md:w-10 md:h-10" />

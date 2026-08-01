@@ -9,7 +9,7 @@ const page = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:5000/admin/bookings", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/bookings`, {
           method: "GET",
           credentials: "include",
         });

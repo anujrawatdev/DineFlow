@@ -23,14 +23,14 @@ const Page = () => {
 
   
   const [restaurantImage, setRestaurantImage] = useState(null);
-  const [existingImage, setExistingImage] = useState(""); // Current uploaded image URL
-  const [imagePreview, setImagePreview] = useState(null); // Local preview URL
+  const [existingImage, setExistingImage] = useState(""); 
+  const [imagePreview, setImagePreview] = useState(null); 
 
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/my-restaurants/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/my-restaurants/${id}`,
           { credentials: "include", method: "GET" },
         );
         const data = await response.json();
@@ -53,7 +53,7 @@ console.log("Image path:", data.restaurantImage);
 
           const imagePath = data.restaurantImage || data.image || "";
           if (imagePath) {
-            setExistingImage(`http://localhost:5000${imagePath}`);
+            setExistingImage(`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`);
           }
         }
       } catch (error) {
@@ -93,7 +93,7 @@ console.log("Image path:", data.restaurantImage);
 
     try {
       const response = await fetch(
-        `http://localhost:5000/my-restaurant/update/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/my-restaurant/update/${id}`,
         {
           method: "PATCH",
           credentials: "include",

@@ -10,7 +10,7 @@ const RoleGuard = ({ role, children }) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/profile", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
           credentials: "include",
         });
 

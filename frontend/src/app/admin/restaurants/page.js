@@ -9,7 +9,7 @@ const page = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await fetch("http://localhost:5000/admin/restaurants", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/restaurants`, {
           method: "GET",
           credentials: "include",
         });
@@ -27,7 +27,7 @@ const page = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const response = await fetch(`http://localhost:5000/admin/restaurants/${id}/delete`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/restaurants/${id}/delete`, {
       method: "DELETE",
       credentials: "include",
     });

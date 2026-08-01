@@ -9,7 +9,7 @@ const RestaurantsCard = ({ restaurant }) => {
       
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
-          src={`http://localhost:5000${restaurant?.restaurantImage}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${restaurant?.restaurantImage}`}
           alt={restaurant?.name || "Restaurant"}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -17,27 +17,27 @@ const RestaurantsCard = ({ restaurant }) => {
               
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
-        {/* Rating */}
+        
         <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1 text-[10px] font-medium text-stone-800 shadow-sm">
           <Star size={10} className="fill-amber-400 text-amber-400" />
           4.8
         </div>
 
-        {/* Status */}
+        
         <div className="absolute top-2 left-2 bg-emerald-50 text-emerald-700 text-[9px] font-semibold px-2 py-1 rounded-full border border-emerald-100">
           OPEN
         </div>
       </div>
 
-      {/* Body */}
+      
       <div className="p-3 sm:p-4 flex flex-col flex-grow">
 
-        {/* Title */}
+        
         <h2 className="text-sm sm:text-base md:text-lg font-serif text-stone-900 leading-snug line-clamp-1">
           {restaurant?.name}
         </h2>
 
-        {/* Cuisine + Price */}
+        
         <div className="flex items-center justify-between mt-1 text-[10px] sm:text-xs text-stone-500">
           <span className="truncate mr-2">{restaurant?.cuisine}</span>
           <span className="font-semibold text-stone-900 whitespace-nowrap">
@@ -45,13 +45,13 @@ const RestaurantsCard = ({ restaurant }) => {
           </span>
         </div>
 
-        {/* Location */}
+        
         <div className="flex items-center gap-1.5 mt-2 text-[10px] sm:text-xs text-stone-600">
           <MapPin size={12} className="text-stone-400 shrink-0" />
           <span className="truncate">{restaurant?.location?.city}</span>
         </div>
 
-        {/* Time */}
+        
         <div className="flex items-center gap-1.5 mt-1 text-[10px] sm:text-xs text-stone-600">
           <Clock size={12} className="text-stone-400 shrink-0" />
           <span className="truncate">
@@ -59,7 +59,7 @@ const RestaurantsCard = ({ restaurant }) => {
           </span>
         </div>
 
-        {/* Single CTA */}
+        
         <div className="mt-3 sm:mt-4">
           <Link href={`/restaurants/${restaurant?._id}`} className="block">
             <button className="w-full bg-stone-900 hover:bg-stone-800 active:scale-[0.98] text-white text-[10px] sm:text-xs font-medium tracking-[0.15em] uppercase py-2.5 sm:py-3 rounded-full transition-all duration-300">

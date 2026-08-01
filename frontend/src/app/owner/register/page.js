@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import React, { useState } from "react";
@@ -15,7 +13,7 @@ export default function RegisterAsOwnerForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/owner-request", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/owner-request`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -52,7 +50,7 @@ export default function RegisterAsOwnerForm() {
   return (
     <main className="min-h-screen bg-[#FDFCFB] flex items-center justify-center px-6 py-16 text-[#1A1A1A]">
       <div className="w-full max-w-2xl">
-        {/* Header */}
+        
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#E5E2DE] bg-[#F7F5F2] px-4 py-1.5 text-xs font-semibold tracking-wider uppercase text-[#7A6A5C] mb-4">
             <BadgeCheck size={15} className="text-green-400" />
@@ -68,10 +66,10 @@ export default function RegisterAsOwnerForm() {
           </p>
         </div>
 
-        {/* Form Container */}
+        
         <div className="rounded-2xl border border-[#E5E2DE] bg-white p-8 md:p-10 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Phone */}
+            
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Phone Number
@@ -90,7 +88,7 @@ export default function RegisterAsOwnerForm() {
               </div>
             </div>
 
-            {/* Experience */}
+           
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Restaurant / Hospitality Experience
@@ -108,7 +106,7 @@ export default function RegisterAsOwnerForm() {
               </div>
             </div>
 
-            {/* Reason */}
+            
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Statement of Purpose
@@ -126,7 +124,7 @@ export default function RegisterAsOwnerForm() {
               </div>
             </div>
 
-            {/* Business License */}
+            
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Business License / FSSAI Number (Optional)
@@ -143,7 +141,7 @@ export default function RegisterAsOwnerForm() {
               </div>
             </div>
 
-            {/* Submit */}
+            
             <button
               type="submit"
               className="mt-4 w-full rounded-xl bg-[#1A1A1A] py-4 text-xs font-medium uppercase tracking-wider text-white transition hover:bg-[#333333] shadow-sm"
@@ -151,7 +149,7 @@ export default function RegisterAsOwnerForm() {
               Submit Application
             </button>
 
-            {/* Note */}
+          
             <div className="rounded-xl border border-[#E5E2DE] bg-[#F7F5F2] p-4 text-xs text-[#666666] font-light leading-relaxed">
               <span className="font-semibold text-[#1A1A1A]">Note:</span> Applications are subject to review by the DineFlow team. Once confirmed, your account privileges will update automatically to access owner features.
             </div>

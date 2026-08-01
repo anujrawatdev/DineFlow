@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import DashboardCard from "@/components/admin/DashboardCard";
@@ -19,7 +17,7 @@ const Page = () => {
 
     const fetchDashboardData = async () => {
       try {
-        const profileResponse = await fetch("http://localhost:5000/profile", {
+        const profileResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, {
           credentials: "include",
         });
 
@@ -30,7 +28,7 @@ const Page = () => {
           return;
         }
 
-        const response = await fetch("http://localhost:5000/admin/dashboard", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, {
           method: "GET",
           credentials: "include",
         });
@@ -67,10 +65,10 @@ const Page = () => {
     <>
     
     <div className="flex flex-col lg:flex-row min-h-screen bg-[#FDFCFB] text-[#1A1A1A]">
-      {/* Sidebar */}
+      
       <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-[#E5E2DE] bg-white p-3 sm:p-5 lg:p-6 flex flex-col gap-4 lg:gap-6">
         <div>
-          {/* Logo Branding */}
+          
           <div className="pb-2 border-b border-[#E5E2DE]">
             <h1 className="text-2xl font-serif tracking-tight text-[#1A1A1A]">
               DineFlow
@@ -80,7 +78,7 @@ const Page = () => {
             </p>
           </div>
 
-          {/* Navigation Links */}
+          
           <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pt-3 lg:pb-0 -mx-1 px-1">
             <Link
               href="/admin"
@@ -124,7 +122,7 @@ const Page = () => {
           </nav>
         </div>
 
-        {/* Logout Action */}
+        
         <div className="pt-4 border-t border-[#E5E2DE] flex justify-end lg:block">
           <Link href="/home">
           <button
@@ -136,9 +134,9 @@ const Page = () => {
         </div>
       </aside>
 
-      {/* Main Dashboard Content Area */}
+      
       <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-y-auto">
-        {/* Header */}
+        
         <div className="mb-10">
           <p className="text-xs tracking-[0.25em] uppercase text-[#7A6A5C] font-semibold">
             Overview
@@ -148,7 +146,7 @@ const Page = () => {
           </h1>
         </div>
 
-        {/* Metric Cards Grid */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           <div className="rounded-2xl border border-[#E5E2DE] bg-white p-4 sm:p-5 lg:p-6 shadow-sm">
             <DashboardCard

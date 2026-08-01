@@ -24,7 +24,7 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:5000/myBookings", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myBookings`, {
           method: "GET",
           credentials: "include",
         });

@@ -17,7 +17,7 @@ const MyRestaurantsCard = ({ restaurant }) => {
     return imagePath;
   }
 
-  return `http://localhost:5000${imagePath}`;
+  return `${process.env.NEXT_PUBLIC_API_URL}${imagePath}`;
 };
 
   const handleDelete = async (id) => {
@@ -25,7 +25,7 @@ const MyRestaurantsCard = ({ restaurant }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/my-restaurants/delete/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/my-restaurants/delete/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -103,7 +103,6 @@ const MyRestaurantsCard = ({ restaurant }) => {
           </div>
         </div>
 
-        {/* Card Actions */}
         <div className="pt-5 mt-5 border-t border-[#E5E2DE] flex items-center justify-between gap-2">
           <Link
             href={`/restaurants/${restaurant._id}`}
