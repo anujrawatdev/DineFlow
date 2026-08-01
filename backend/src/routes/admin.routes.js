@@ -8,7 +8,8 @@ const {
   getAllRestaurantsAdmin,
   deleteRestaurantAdmin,
   deleteUserAdmin,
-  getAllOwnerRequests
+  getAllOwnerRequests,
+  updateOwnerRequestStatus
 } = require("../controllers/admin.controller");
 
 const { checkForAuthentication } = require("../middleware/user");
@@ -50,11 +51,14 @@ router.delete(
   checkForAdmin,
   deleteUserAdmin,
 );
-router.post(
+router.get(
   "/admin/owner-requests",
   checkForAuthentication,
   checkForAdmin,
   getAllOwnerRequests,
 );
-
+router.patch("/admin/owner-request/:id",
+  checkForAuthentication,
+  checkForAdmin,
+  updateOwnerRequestStatus);
 module.exports = router;

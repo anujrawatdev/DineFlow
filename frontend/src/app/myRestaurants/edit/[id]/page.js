@@ -1,11 +1,9 @@
-
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Navbar from "../Navbar/Navbar";
-import {toast} from 'sonner';
+import Navbar from "@/app/Navbar/Navbar";
+import { toast } from "sonner";
 
 const Page = () => {
   const { id } = useParams();
@@ -22,16 +20,23 @@ const Page = () => {
   const [closingTime, setClosingTime] = useState("");
   const [price, setPriceRange] = useState("");
   const [cuisine, setCuisine] = useState("");
+
+  
   const [restaurantImage, setRestaurantImage] = useState(null);
+  const [existingImage, setExistingImage] = useState(""); // Current uploaded image URL
+  const [imagePreview, setImagePreview] = useState(null); // Local preview URL
 
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
         const response = await fetch(
           `http://localhost:5000/my-restaurants/${id}`,
-          { credentials: "include", method: "GET" }
+          { credentials: "include", method: "GET" },
         );
         const data = await response.json();
+
+        console.log("Restaurant data:", data);
+console.log("Image path:", data.restaurantImage);
 
         if (response.ok && data) {
           setRestaurants(data);
@@ -45,6 +50,11 @@ const Page = () => {
           setClosingTime(data.closingTime || "");
           setPriceRange(data.price || "");
           setCuisine(data.cuisine || "");
+
+          const imagePath = data.restaurantImage || data.image || "";
+          if (imagePath) {
+            setExistingImage(`http://localhost:5000${imagePath}`);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch restaurant details:", error);
@@ -52,6 +62,15 @@ const Page = () => {
     };
     if (id) fetchRestaurant();
   }, [id]);
+
+  
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setRestaurantImage(file);
+      setImagePreview(URL.createObjectURL(file)); 
+    }
+  };
 
   const handleUpdateRestaurant = async (e) => {
     e.preventDefault();
@@ -79,7 +98,7 @@ const Page = () => {
           method: "PATCH",
           credentials: "include",
           body: formData,
-        }
+        },
       );
 
       const data = await response.json();
@@ -110,14 +129,15 @@ const Page = () => {
               Edit Restaurant
             </h1>
             <p className="mt-2 text-[#666666] font-light">
-              Update the details, operating hours, and imagery for your establishment.
+              Update the details, operating hours, and imagery for your
+              establishment.
             </p>
           </div>
 
-          {/* Form Card */}
+          
           <div className="rounded-2xl border border-[#E5E2DE] bg-white p-8 md:p-12 shadow-sm">
             <form onSubmit={handleUpdateRestaurant} className="space-y-8">
-              {/* Basic Details */}
+          
               <div className="space-y-6">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
                   General Information
@@ -150,7 +170,7 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Location Details */}
+              
               <div className="space-y-6">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
                   Location
@@ -211,7 +231,7 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Timing & Pricing */}
+              
               <div className="space-y-6">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
                   Operations & Concept
@@ -274,7 +294,7 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Image Upload */}
+              
               <div className="space-y-4">
                 <h2 className="text-xs tracking-[0.2em] uppercase text-[#7A6A5C] font-semibold pb-2 border-b border-[#E5E2DE]">
                   Media
@@ -284,12 +304,27 @@ const Page = () => {
                   Update Cover Image
                 </label>
 
+                
+                {(imagePreview || existingImage) && (
+                  <div className="relative w-full h-48 rounded-xl overflow-hidden border border-[#E5E2DE] mb-4 bg-[#F7F5F2]">
+                   
+                    <img
+                      src={imagePreview || existingImage}
+                      alt="Restaurant Preview"
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute top-2 left-2 bg-black/60 text-white text-[10px] uppercase tracking-widest px-2 py-1 rounded">
+                      {imagePreview ? "New Image Selected" : "Current Image"}
+                    </span>
+                  </div>
+                )}
+
                 <div className="rounded-2xl border-2 border-dashed border-[#E5E2DE] bg-[#FDFCFB] p-6 text-center transition hover:border-[#7A6A5C]">
                   <input
                     type="file"
                     accept="image/*"
                     id="file-upload"
-                    onChange={(e) => setRestaurantImage(e.target.files[0])}
+                    onChange={handleImageChange}
                     className="hidden"
                   />
                   <label
@@ -311,7 +346,7 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* Actions */}
+             
               <div className="pt-4 flex gap-4">
                 <button
                   type="button"

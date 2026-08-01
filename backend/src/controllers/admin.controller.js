@@ -1,5 +1,8 @@
-const { User, Booking, Restaurant } = require("../models/user.model");
-const OwnerRequest = require('../models/owner.model');
+const User = require("../models/user.model");
+const Restaurant = require("../models/restaurant.model");
+const Booking = require("../models/booking.model");
+
+const OwnerRequest = require("../models/owner.model");
 const getAllUsersAdmin = async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -13,13 +16,17 @@ const getAllUsersAdmin = async (req, res) => {
 
 const getAllRestaurantsAdmin = async (req, res) => {
   try {
-    const restaurants = await Restaurant.find().populate("owner", "name email");
-    console.log(JSON.stringify(restaurants[0].owner, null, 2));
+    const restaurants = await Restaurant.find().populate(
+      "owner", 
+      "name email"
+    );
+
     return res.status(200).json(restaurants);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "something went wrong", error: error.message });
+    return res.status(500).json({ 
+      message: "something went wrong", 
+      error: error.message 
+    });
   }
 };
 
@@ -97,6 +104,12 @@ const deleteUserAdmin = async (req, res) => {
       });
     }
 
+    if (user.role === "admin") {
+      return res.status(400).json({
+        message: "Admin account cannot be deleted",
+      });
+    }
+
     await Booking.deleteMany({
       user: id,
     });
@@ -133,46 +146,40 @@ async function getAllOwnerRequests(req, res) {
 const updateOwnerRequestStatus = async (req, res) => {
   try {
     const { id } = req.params;
-  const { status } = req.body;
+    const { status } = req.body;
 
-  if (status !== "approved" && status !== "rejected") {
-    return res.status(400).json({ message: "Invalid Status" });
-  }
-  const ownerRequest = await OwnerRequest.findById(id);
-  if (!ownerRequest) {
-    return res.status(404).json({
-      message: "request not found",
+    if (status !== "approved" && status !== "rejected") {
+      return res.status(400).json({ message: "Invalid Status" });
+    }
+    const ownerRequest = await OwnerRequest.findById(id);
+    if (!ownerRequest) {
+      return res.status(404).json({
+        message: "request not found",
+      });
+    }
+    if (ownerRequest.status !== "pending") {
+      return res.status(400).json({
+        message: "Request already processed",
+      });
+    }
+
+    ownerRequest.status = status;
+    await ownerRequest.save();
+
+    if (status === "approved") {
+      await User.findByIdAndUpdate(ownerRequest.user, { role: "owner" });
+    }
+
+    return res.status(200).json({ message: `Owner request ${status}` });
+  } catch (error) {
+    console.log("error", error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
     });
   }
-  if(ownerRequest.status !== "pending"){
-   return res.status(400).json({
-      message:"Request already processed"
-   });
-}
-  
-  ownerRequest.status = status;
-  await ownerRequest.save();
-  
-  if(status === "approved"){
-   await User.findByIdAndUpdate(
-      ownerRequest.user,
-      {role:"owner"}
-   );
-}
-
-  return res.status(200).json({ message: `Owner request ${status}`});
-}
-
-catch (error) {
-    console.log("error",error);
-    
-    return res.status(500).json({
-    message: "Internal server error",
-    error: error.message,
-  });
-  }
-
-  } 
+};
 
 module.exports = {
   getAllUsersAdmin,
@@ -182,5 +189,5 @@ module.exports = {
   deleteRestaurantAdmin,
   deleteUserAdmin,
   getAllOwnerRequests,
-  updateOwnerRequestStatus
+  updateOwnerRequestStatus,
 };

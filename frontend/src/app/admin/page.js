@@ -66,12 +66,12 @@ const Page = () => {
   return (
     <>
     
-    <div className="flex min-h-screen bg-[#FDFCFB] text-[#1A1A1A]">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[#FDFCFB] text-[#1A1A1A]">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-[#E5E2DE] bg-white flex flex-col justify-between p-6">
+      <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-[#E5E2DE] bg-white p-3 sm:p-5 lg:p-6 flex flex-col gap-4 lg:gap-6">
         <div>
           {/* Logo Branding */}
-          <div className="mb-10 pb-6 border-b border-[#E5E2DE]">
+          <div className="pb-2 border-b border-[#E5E2DE]">
             <h1 className="text-2xl font-serif tracking-tight text-[#1A1A1A]">
               DineFlow
             </h1>
@@ -81,10 +81,10 @@ const Page = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex flex-col gap-1.5">
+          <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pt-3 lg:pb-0 -mx-1 px-1">
             <Link
               href="/admin"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#F7F5F2] text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
+              className="shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#F7F5F2] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
             >
               <LayoutDashboard size={16} className="text-[#7A6A5C]" />
               Dashboard
@@ -92,7 +92,7 @@ const Page = () => {
 
             <Link
               href="/admin/users"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium uppercase tracking-wider text-[#666666] hover:text-[#1A1A1A] hover:bg-[#FDFCFB] transition"
+              className="shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#F7F5F2] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
             >
               <Users size={16} className="text-[#7A6A5C]" />
               Users
@@ -100,7 +100,7 @@ const Page = () => {
 
             <Link
               href="/admin/restaurants"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium uppercase tracking-wider text-[#666666] hover:text-[#1A1A1A] hover:bg-[#FDFCFB] transition"
+              className="shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#F7F5F2] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
             >
               <UtensilsCrossed size={16} className="text-[#7A6A5C]" />
               Restaurants
@@ -108,7 +108,7 @@ const Page = () => {
 
             <Link
               href="/admin/bookings"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium uppercase tracking-wider text-[#666666] hover:text-[#1A1A1A] hover:bg-[#FDFCFB] transition"
+              className="shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#F7F5F2] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
             >
               <Calendar size={16} className="text-[#7A6A5C]" />
               Bookings
@@ -116,7 +116,7 @@ const Page = () => {
 
             <Link
               href="/admin/ownerRequest"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium uppercase tracking-wider text-[#666666] hover:text-[#1A1A1A] hover:bg-[#FDFCFB] transition"
+              className="shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#F7F5F2] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#1A1A1A] transition"
             >
               <UserCheck size={16} className="text-[#7A6A5C]" />
               Owner Requests
@@ -125,10 +125,10 @@ const Page = () => {
         </div>
 
         {/* Logout Action */}
-        <div className="pt-6 border-t border-[#E5E2DE]">
+        <div className="pt-4 border-t border-[#E5E2DE] flex justify-end lg:block">
           <Link href="/home">
           <button
-           className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#E5E2DE] bg-[#F7F5F2] py-3 text-xs font-medium uppercase tracking-wider text-[#1A1A1A] transition hover:bg-[#E5E2DE]">
+           className="w-auto lg:w-full px-4 sm:px-5 flex items-center justify-center gap-2 rounded-xl border border-[#E5E2DE] bg-[#F7F5F2] py-2.5 sm:py-3 text-[11px] sm:text-xs font-medium uppercase tracking-wider text-[#1A1A1A] transition hover:bg-[#E5E2DE]">
             <CircleArrowLeft size={15} />
             Home
           </button>
@@ -137,20 +137,20 @@ const Page = () => {
       </aside>
 
       {/* Main Dashboard Content Area */}
-      <main className="flex-1 p-8 md:p-12 overflow-y-auto">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 overflow-y-auto">
         {/* Header */}
         <div className="mb-10">
           <p className="text-xs tracking-[0.25em] uppercase text-[#7A6A5C] font-semibold">
             Overview
           </p>
-          <h1 className="mt-1 text-4xl font-normal font-serif tracking-tight text-[#1A1A1A]">
+          <h1 className="mt-1 text-2xl sm:text-3xl md:text-4xl font-normal font-serif tracking-tight text-[#1A1A1A]">
             Dashboard Metrics
           </h1>
         </div>
 
         {/* Metric Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-6 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-4 sm:p-5 lg:p-6 shadow-sm">
             <DashboardCard
               title="Users"
               count={stats?.totalUsers}
@@ -159,7 +159,7 @@ const Page = () => {
             />
           </div>
 
-          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-4 sm:p-5 lg:p-6 shadow-sm">
             <DashboardCard
               title="Restaurants"
               count={stats?.totalRestaurants}
@@ -167,7 +167,7 @@ const Page = () => {
             />
           </div>
 
-          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[#E5E2DE] bg-white p-4 sm:p-5 lg:p-6 shadow-sm">
             <DashboardCard
               title="Bookings"
               count={stats?.totalBookings}

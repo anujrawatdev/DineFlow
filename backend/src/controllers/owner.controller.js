@@ -1,5 +1,6 @@
 const OwnerRequest = require("../models/owner.model");
-const {User} = require("../models/user.model");
+const User = require("../models/user.model");
+
 async function createOwner(req, res) {
   try {
     const { phone, experience, reason, businessLicense } = req.body;
@@ -65,7 +66,7 @@ async function approveOwnerRequest(req, res) {
     const request = await OwnerRequest.findById(req.params.id);
     if (!request) {
       return res.status(404).json({
-        message: "request not found",
+        message: "Request not found",
       });
     }
 

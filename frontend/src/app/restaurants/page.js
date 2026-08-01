@@ -1,56 +1,5 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import RestaurantsCard from "../cards/RestaurantsCard";
-// import LandingPage from "./landingPage";
-// import Footer from "../home/Footer/page";
-// import Navbar from "../Navbar/Navbar";
-// import { filter } from "framer-motion/client";
-// const page = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [allRestaurants, setAllRestaurants] = useState([]);
-
-//   useEffect(() => {
-//     const fetchAllRestaurants = async () => {
-//       const response = await fetch("http://localhost:5000/restaurants", {
-//         method: "GET",
-//         credentials: "include",
-//       });
-//       const data = await response.json();
-//       setAllRestaurants(data);
-//     };
-
-//     fetchAllRestaurants();
-//   }, []);
-
-//   const filterRestaurants = allRestaurants.filter((restaurant)=>{
-//      return restaurant.name
-//      .toLowerCase()
-//      .includes(searchTerm.toLowerCase());
-//   })
-
-//   return (
-//     <div>
-//       <Navbar />
-//       <main className="min-h-screen bg-neutral-300">
-//         <LandingPage 
-//         searchTerm={searchTerm}
-//         setSearchTerm={setSearchTerm}
-//          />
-
-//         <section className="flex flex-wrap gap-5 justify-center px-10 py-10">
-//           {filterRestaurants.map((restaurant) => (
-//             <RestaurantsCard key={restaurant._id} restaurant={restaurant} />
-//           ))}
-//         </section>
-//       </main>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default page;
-
 "use client";
+
 import React, { useEffect, useState } from "react";
 import RestaurantsCard from "../cards/RestaurantsCard";
 import LandingPage from "./landingPage";
@@ -69,6 +18,7 @@ const Page = () => {
           method: "GET",
           credentials: "include",
         });
+
         const data = await response.json();
         setAllRestaurants(data);
       } catch (error) {
@@ -81,6 +31,7 @@ const Page = () => {
 
   const filterRestaurants = allRestaurants.filter((restaurant) => {
     const term = searchTerm.toLowerCase();
+
     return (
       restaurant.name?.toLowerCase().includes(term) ||
       restaurant.cuisine?.toLowerCase().includes(term) ||
@@ -89,55 +40,72 @@ const Page = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] text-stone-900 font-sans selection:bg-stone-300">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#f8f5f0] text-stone-900 font-sans selection:bg-stone-300">
       <Navbar />
-      
-      <main className="pt-[10vh]">
+
+      <main className="pt-16 sm:pt-18 md:pt-20">
         <LandingPage
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
 
-        {/* RESTAURANT GRID SECTION */}
-        <section className="max-w-7xl mx-auto px-6 md:px-16 py-20">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4 border-b border-stone-200/80 pb-6">
-            <div>
-              <span className="text-xs uppercase tracking-[0.25em] text-stone-500 font-semibold block mb-2">
+        
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8 py-10 sm:py-12 md:py-16 lg:py-20">
+
+          
+          <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-end md:justify-between mb-8 sm:mb-10 md:mb-12 border-b border-stone-200/80 pb-5 sm:pb-6">
+
+            <div className="min-w-0">
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.22em] sm:tracking-[0.25em] text-stone-500 font-semibold block mb-2">
                 Curated Collection
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-stone-900 font-normal">
-                {searchTerm ? `Results for "${searchTerm}"` : "All Establishments"}
+
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900 font-normal leading-tight break-words">
+                {searchTerm
+                  ? `Results for “${searchTerm}”`
+                  : "All Establishments"}
               </h2>
             </div>
-            <p className="text-xs uppercase tracking-widest text-stone-500 font-sans">
+
+            <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.22em] text-stone-500 font-sans whitespace-nowrap">
               Showing {filterRestaurants.length} Places
             </p>
           </div>
 
+          
           {filterRestaurants.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
               {filterRestaurants.map((restaurant, index) => (
                 <motion.div
                   key={restaurant._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.04,
+                    ease: "easeOut",
+                  }}
+                  className="h-full"
                 >
                   <RestaurantsCard restaurant={restaurant} />
                 </motion.div>
               ))}
             </div>
           ) : (
-            <div className="py-20 text-center space-y-4">
-              <p className="font-serif text-2xl text-stone-600 font-light">
-                No dining places match your query.
-              </p>
-              <button
-                onClick={() => setSearchTerm("")}
-                className="text-xs uppercase tracking-[0.2em] text-stone-900 border-b border-stone-900 pb-1 hover:text-stone-500 transition-colors"
-              >
-                Clear Search Filter
-              </button>
+            
+            <div className="py-16 sm:py-20 text-center">
+              <div className="mx-auto max-w-md space-y-4 sm:space-y-5 px-2">
+                <p className="font-serif text-xl sm:text-2xl text-stone-600 font-light leading-relaxed">
+                  No dining places match your query.
+                </p>
+
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-stone-900 border-b border-stone-900 pb-1 hover:text-stone-500 hover:border-stone-500 transition-colors"
+                >
+                  Clear Search Filter
+                </button>
+              </div>
             </div>
           )}
         </section>

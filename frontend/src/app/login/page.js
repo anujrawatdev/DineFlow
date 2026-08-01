@@ -1,111 +1,9 @@
-// "use client";
-
-// import React from "react";
-// import { useState } from "react";
-// import { useRouter } from "next/navigation";
-
-
-
-
-// const page = () => {
-
-//     const router = useRouter();
-    
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const userData = {
-//       email,
-//       password,
-//     };
-
-//     try {
-//       const response = await fetch("http://localhost:5000/login", {
-//         method:"POST",
-//         headers: {
-//           "content-type": "application/json",
-//         },
-//         credentials: "include",
-//         body: JSON.stringify(userData),
-//       });
-
-//       const data = await response.json(userData);
-
-//       if (response.ok) {
-//         alert("login successfully");
-//         console.log("login successful");
-
-//         setEmail("");
-//         setPassword("");
-
-//         router.push("/home");
-        
-//       } else {
-//         alert(data.message);
-//       }
-//     } catch (error) {
-//       console.log("error:", error);
-//     }
-//   };
-
-//   return (
-//     <div className=" flex justify-center items-center min-h-[90vh] absolute inset-0 bg-[url('/images/Background-form.jpg')] bg-cover bg-center scale-110">
-//       <div className="absolute inset-0 backdrop-blur-sm bg-black/40" />
-//       <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl p-8">
-//         <div className="text-center mb-8">
-//           <h1 className="text-4xl font-bold text-white">Dine<span className="text-amber-400">Flow</span></h1>
-//           <p className="text-gray-300 mt-2">Login your account</p>
-//         </div>
-
-//         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-//           <input
-//             type="email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             placeholder="Email Address"
-//             className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 outline-none focus:border-amber-400"
-//           />
-
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             placeholder="Password"
-//             className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 outline-none focus:border-amber-400"
-//           />
-
-//           <button
-//             type="submit"
-//             className="mt-2 rounded-xl bg-amber-500 py-3 font-semibold text-white transition hover:bg-amber-400"
-//           >
-//             Login Account
-//           </button>
-//            <p className="text-center text-gray-300">
-//             Don't have an account?{" "}
-//             <a
-//               href="/signup"
-//               className="relative inline-block after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
-//             >
-//               SignUp
-//             </a>
-//           </p>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default page;
-
 "use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {toast} from 'sonner';
+import { toast } from "sonner";
 
 const Page = () => {
   const router = useRouter();
@@ -135,7 +33,7 @@ const Page = () => {
 
       if (response.ok) {
         toast.success("Login successful");
-        
+
         setEmail("");
         setPassword("");
 
@@ -144,31 +42,32 @@ const Page = () => {
         toast.error(data.message || "Failed to log in");
       }
     } catch (error) {
-      toast.error("error:", error);
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   return (
-    <main className="min-h-screen bg-[#FDFCFB] flex items-center justify-center px-6 py-16 text-[#1A1A1A]">
-      <div className="w-full max-w-md">
-        {/* Header Branding */}
-        <div className="text-center mb-8">
-          <p className="text-xs tracking-[0.25em] uppercase text-[#1A1A1A] font-semibold">
+    <main className="min-h-screen bg-[#FDFCFB] flex items-center justify-center px-4 sm:px-6 md:px-10 py-12 md:py-20 text-[#1A1A1A]">
+      <div className="w-full max-w-md md:max-w-lg transition-all duration-300">
+        
+        
+        <div className="text-center mb-6 md:mb-10 space-y-1.5 md:space-y-2.5">
+          <p className="text-[11px] md:text-xs tracking-[0.25em] uppercase text-[#1A1A1A] font-semibold">
             Welcome Back
           </p>
-          <h1 className="mt-2 text-4xl font-normal font-serif tracking-tight text-[#1A1A1A]">
-            Log In to <span className="text-[#7A6A5C]">DineFlow</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal font-serif tracking-tight text-[#1A1A1A]">
+            Log In to <span className="text-[#1A1A1A]">Dine<span className="text-[#7A6A5C]">Flow</span></span>
           </h1>
-          <p className="mt-2 text-sm text-[#666666] font-light">
+          <p className="text-xs sm:text-sm md:text-base text-[#666666] font-light max-w-xs sm:max-w-sm mx-auto">
             Enter your credentials to access your account dashboard.
           </p>
         </div>
 
-        {/* Card Form */}
-        <div className="rounded-2xl border border-[#E5E2DE] bg-white p-8 md:p-10 shadow-sm">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        
+        <div className="rounded-2xl md:rounded-3xl border border-[#E5E2DE] bg-white p-6 sm:p-8 md:p-12 shadow-sm md:shadow-md transition-all duration-300">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:gap-7">
             <div>
-              <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
+              <label className="block text-[11px] md:text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Email Address
               </label>
               <input
@@ -176,13 +75,13 @@ const Page = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="john@example.com"
-                className="w-full rounded-xl border border-[#E5E2DE] bg-[#FDFCFB] px-4 py-3 text-sm text-[#1A1A1A] placeholder-[#A39A90] outline-none transition focus:border-[#7A6A5C] focus:bg-white"
+                className="w-full rounded-xl md:rounded-2xl border border-[#E5E2DE] bg-[#FDFCFB] px-4 md:px-5 py-3 md:py-3.5 text-sm md:text-base text-[#1A1A1A] placeholder-[#A39A90] outline-none transition focus:border-[#7A6A5C] focus:bg-white focus:ring-1 focus:ring-[#7A6A5C]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
+              <label className="block text-[11px] md:text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Password
               </label>
               <input
@@ -190,19 +89,19 @@ const Page = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-[#E5E2DE] bg-[#FDFCFB] px-4 py-3 text-sm text-[#1A1A1A] placeholder-[#A39A90] outline-none transition focus:border-[#7A6A5C] focus:bg-white"
+                className="w-full rounded-xl md:rounded-2xl border border-[#E5E2DE] bg-[#FDFCFB] px-4 md:px-5 py-3 md:py-3.5 text-sm md:text-base text-[#1A1A1A] placeholder-[#A39A90] outline-none transition focus:border-[#7A6A5C] focus:bg-white focus:ring-1 focus:ring-[#7A6A5C]"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="mt-2 w-full rounded-xl bg-[#1A1A1A] py-3.5 text-xs font-medium uppercase tracking-wider text-white transition hover:bg-[#333333] shadow-sm"
+              className="mt-1 md:mt-2 w-full rounded-xl md:rounded-2xl bg-[#1A1A1A] py-3.5 md:py-4 text-xs md:text-sm font-medium uppercase tracking-wider text-white transition hover:bg-[#333333] shadow-sm hover:shadow active:scale-[0.99]"
             >
               Log In
             </button>
 
-            <div className="pt-2 text-center text-xs text-[#666666] font-light">
+            <div className="pt-2 text-center text-xs md:text-sm text-[#666666] font-light">
               Don't have an account?{" "}
               <Link
                 href="/signup"
