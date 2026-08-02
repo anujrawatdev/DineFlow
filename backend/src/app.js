@@ -13,7 +13,9 @@ const bookingRoutes = require('./routes/booking.routes');
 const app = express();
 
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:["http://localhost:3000",
+        "https://dineflow-iwa6z6vtt-anuj-rawat.vercel.app"
+    ],
     credentials:true,
 }));
 
