@@ -49,23 +49,26 @@ const Page = () => {
   return (
     <main className="min-h-screen bg-[#FDFCFB] flex items-center justify-center px-4 sm:px-6 md:px-10 py-12 md:py-20 text-[#1A1A1A]">
       <div className="w-full max-w-md md:max-w-lg transition-all duration-300">
-        
-        
         <div className="text-center mb-6 md:mb-10 space-y-1.5 md:space-y-2.5">
           <p className="text-[11px] md:text-xs tracking-[0.25em] uppercase text-[#1A1A1A] font-semibold">
             Welcome Back
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal font-serif tracking-tight text-[#1A1A1A]">
-            Log In to <span className="text-[#1A1A1A]">Dine<span className="text-[#7A6A5C]">Flow</span></span>
+            Log In to{" "}
+            <span className="text-[#1A1A1A]">
+              Dine<span className="text-[#7A6A5C]">Flow</span>
+            </span>
           </h1>
           <p className="text-xs sm:text-sm md:text-base text-[#666666] font-light max-w-xs sm:max-w-sm mx-auto">
             Enter your credentials to access your account dashboard.
           </p>
         </div>
 
-        
         <div className="rounded-2xl md:rounded-3xl border border-[#E5E2DE] bg-white p-6 sm:p-8 md:p-12 shadow-sm md:shadow-md transition-all duration-300">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:gap-7">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-5 md:gap-7"
+          >
             <div>
               <label className="block text-[11px] md:text-xs uppercase tracking-wider text-[#7A6A5C] font-semibold mb-2">
                 Email Address

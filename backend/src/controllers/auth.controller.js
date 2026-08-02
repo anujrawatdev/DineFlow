@@ -37,11 +37,20 @@ async function createUser(req, res) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+    secure: true,
+    sameSite: "none",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+});
 
-  return res.status(201).json({ message: "created successfully" });
+  return res.status(201).json({ 
+    message: "created successfully",
+   user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role
+  }
+ });
 }
 
 //Login User
@@ -67,12 +76,19 @@ async function loginUser(req, res) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "strict",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+    secure: true,
+    sameSite: "none",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+});
 
   return res.status(200).json({
     message: "Login successful",
+    user: {
+    id: existingUser._id,
+    name: existingUser.name,
+    email: existingUser.email,
+    role: existingUser.role
+  }
   });
 }
 
@@ -81,8 +97,8 @@ async function logout(req, res) {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: false,
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
     });
 
     return res.status(200).json({ message: "logged out successfully" });
