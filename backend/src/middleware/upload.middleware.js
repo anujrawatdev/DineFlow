@@ -1,17 +1,23 @@
-const multer = require('multer');
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const uploadPath = path.join(__dirname, "../../public/uploads");
+
+
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const storage = multer.diskStorage({
-    destination(req,file,cb){
-        cb(null,"./public/uploads");
-    },
-    //if name of every image will be same so it will overwrite that's why we use
-    filename(req,file,cb){
-      cb(null,Date.now() + "-" + file.originalname);
-    }
- })
+  destination: function (req, file, cb) {
+    cb(null, uploadPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
- const upload = multer({
-    storage,
- });
+const upload = multer({ storage });
 
 module.exports = upload;

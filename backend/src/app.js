@@ -22,7 +22,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use("/uploads",express.static(path.join(__dirname,"uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 console.log("Uploads Folder Path:", path.join(__dirname, 'uploads'));
 
 app.use(authRoutes);
