@@ -139,7 +139,7 @@ const Page = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurant`, {
         method: "POST",
         credentials: "include",
         body: formData,
