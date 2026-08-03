@@ -27,10 +27,6 @@ async function createUser(req, res) {
     password: hashPassword,
   });
 
-  console.log("Signup body:", req.body);
-
-  console.log("created user:",user);
-
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
