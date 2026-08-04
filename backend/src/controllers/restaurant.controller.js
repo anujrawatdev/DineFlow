@@ -4,6 +4,7 @@ const Booking = require('../models/booking.model');
 
 //Create Reastaurant
 async function createRestaurant(req, res) {
+
   const {
     name,
     description,
@@ -44,9 +45,10 @@ async function createRestaurant(req, res) {
     cuisine,
     price,
     owner: req.user._id,
-    restaurantImage: "/uploads/" + req.file.filename,
+    restaurantImage: req.file.path,
   });
 
+  
   return res.status(200).json({ message: " Reastaurant created successfully" });
 }
 
@@ -155,7 +157,7 @@ async function updateRestaurant(req,res){
   restaurant.cuisine = cuisine;
 
   if(req.file){
-    restaurant.restaurantImage = `/uploads/${req.file.filename}`;
+    restaurant.restaurantImage = req.file.path;
   }
   await restaurant.save();
 

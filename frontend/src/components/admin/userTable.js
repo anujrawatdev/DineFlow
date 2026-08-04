@@ -10,7 +10,7 @@ const UserTable = ({ users = [], loading, onDelete }) => {
     (user) =>
       user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.role?.toLowerCase().includes(searchQuery.toLowerCase())
+      user.role?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const getRoleBadgeStyle = (role) => {
@@ -36,8 +36,6 @@ const UserTable = ({ users = [], loading, onDelete }) => {
   return (
     <div className="min-h-screen bg-[#FDFCFB] text-[#1A1A1A]">
       <div className="max-w-7xl mx-auto px-3 sm:px-5 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-10">
-
-        
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-5 mb-6 sm:mb-8">
           <div className="min-w-0">
             <p className="text-[10px] sm:text-xs tracking-[0.18em] sm:tracking-[0.25em] uppercase text-[#7A6A5C] font-semibold">
@@ -65,7 +63,6 @@ const UserTable = ({ users = [], loading, onDelete }) => {
           </div>
         </div>
 
-        
         <div className="rounded-2xl border border-[#E5E2DE] bg-white p-3 sm:p-4 mb-5 sm:mb-6 shadow-sm">
           <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-2">
             <Search size={18} className="text-[#7A6A5C] shrink-0" />
@@ -80,7 +77,6 @@ const UserTable = ({ users = [], loading, onDelete }) => {
           </div>
         </div>
 
-        
         <div className="hidden md:block rounded-2xl border border-[#E5E2DE] bg-white shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left border-collapse">
@@ -152,7 +148,7 @@ const UserTable = ({ users = [], loading, onDelete }) => {
                       <td className="px-5 lg:px-6 py-4">
                         <span
                           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider ${getRoleBadgeStyle(
-                            user.role
+                            user.role,
                           )}`}
                         >
                           {user.role}
@@ -164,23 +160,25 @@ const UserTable = ({ users = [], loading, onDelete }) => {
                       </td>
 
                       <td className="px-5 lg:px-6 py-4 text-right">
-  {user?.role !== "admin" && (
-    <button
-      onClick={() => {
-        if (
-          confirm("Are you sure you want to delete this user?")
-        ) {
-          onDelete(user._id);
-        }
-      }}
-      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition"
-      title="Delete User"
-    >
-      <Trash2 size={15} />
-      Delete
-    </button>
-  )}
-</td>
+                        {user?.role !== "admin" && (
+                          <button
+                            onClick={() => {
+                              if (
+                                confirm(
+                                  "Are you sure you want to delete this user?",
+                                )
+                              ) {
+                                onDelete(user._id);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition"
+                            title="Delete User"
+                          >
+                            <Trash2 size={15} />
+                            Delete
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))
                 )}
@@ -189,7 +187,6 @@ const UserTable = ({ users = [], loading, onDelete }) => {
           </div>
         </div>
 
-        
         <div className="md:hidden space-y-3">
           {loading ? (
             <div className="rounded-2xl border border-[#E5E2DE] bg-white p-8 text-center text-sm text-[#7A6A5C] font-serif shadow-sm">
@@ -218,7 +215,7 @@ const UserTable = ({ users = [], loading, onDelete }) => {
 
                       <span
                         className={`mt-1 inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider ${getRoleBadgeStyle(
-                          user.role
+                          user.role,
                         )}`}
                       >
                         {user.role}
@@ -229,31 +226,39 @@ const UserTable = ({ users = [], loading, onDelete }) => {
 
                 <div className="mt-4 space-y-3 text-sm">
                   <div className="flex items-start gap-2 text-[#666666]">
-                    <Mail size={16} className="text-[#7A6A5C] shrink-0 mt-0.5" />
+                    <Mail
+                      size={16}
+                      className="text-[#7A6A5C] shrink-0 mt-0.5"
+                    />
                     <span className="break-all leading-relaxed">
                       {user.email}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2 text-[#666666]">
-                    <CalendarDays size={16} className="text-[#7A6A5C] shrink-0" />
+                    <CalendarDays
+                      size={16}
+                      className="text-[#7A6A5C] shrink-0"
+                    />
                     <span>Joined {formatDate(user.createdAt)}</span>
                   </div>
                 </div>
 
                 {user?.role?.toLowerCase() !== "admin" && (
-  <button
-    onClick={() => {
-      if (confirm("Are you sure you want to delete this user?")) {
-        onDelete(user._id);
-      }
-    }}
-    className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition hover:bg-red-100 active:scale-[0.99]"
-  >
-    <Trash2 size={16} />
-    Delete User
-  </button>
-)}
+                  <button
+                    onClick={() => {
+                      if (
+                        confirm("Are you sure you want to delete this user?")
+                      ) {
+                        onDelete(user._id);
+                      }
+                    }}
+                    className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 transition hover:bg-red-100 active:scale-[0.99]"
+                  >
+                    <Trash2 size={16} />
+                    Delete User
+                  </button>
+                )}
               </div>
             ))
           )}

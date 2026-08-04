@@ -146,7 +146,6 @@ const Page = () => {
       });
 
       const data = await response.json();
-      console.log("PROFILE DATA:", data);
 
       if (response.ok) {
         toast.success("Restaurant created successfully");

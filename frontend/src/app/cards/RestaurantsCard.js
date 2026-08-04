@@ -9,7 +9,7 @@ const RestaurantsCard = ({ restaurant }) => {
       
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
-          src={`${process.env.NEXT_PUBLIC_API_URL}${restaurant?.restaurantImage}`}
+          src={restaurant?.restaurantImage}
           alt={restaurant?.name || "Restaurant"}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"

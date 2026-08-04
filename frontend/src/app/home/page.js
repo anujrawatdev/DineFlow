@@ -21,6 +21,7 @@ const Page = () => {
         });
         const data = await response.json();
         setAllRestaurants(data);
+        console.log(data);
       } catch (err) {
         console.error(err);
       }
